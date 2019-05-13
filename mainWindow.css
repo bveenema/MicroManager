@@ -1,0 +1,156 @@
+:root {
+	--blue: #039be5;
+	--slide-closed-width: 36px;
+	--slide-open-width: 35vw;
+}
+
+.spectrum-UIIcon-CrossMedium {
+	width: 14px;
+	height: 10px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	overflow: hidden;
+}
+
+#main-content-inner {
+	width: 100%;
+}
+
+#main-content-outer {
+	padding-right: var(--slide-closed-width);
+	transition: 0.15s;
+	width: 100%;
+}
+
+#main-content-outer.drawer-open {
+	padding-right: var(--slide-open-width);
+}
+
+#slide-menu {
+	overflow-y: scroll;
+	padding: 1em;
+	position: absolute;
+		top: 0;
+		right: calc(var(--slide-closed-width) - var(--slide-open-width));
+		bottom: 0;
+	text-align: center;
+	transition: 0.15s;
+	width: var(--slide-open-width);
+}
+
+#slide-menu.open {
+	right: 0;
+}
+
+@media screen and (max-width: 700px) {
+  #main-content-outer, #main-content-outer.drawer-open {
+    padding-right: 0;
+  }
+	#slide-menu {
+		right: calc(var(--slide-closed-width) - 100vw);
+    width: 100vw;
+  }
+}
+
+.toggle-slide-menu {
+	text-align: left;
+	margin-left: -10px;
+	width: 36px;
+}
+
+#slide-menu button span {
+	line-height: 1em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#slide-menu .spectrum-ButtonGroup {
+	max-width: 90%;
+}
+
+.spectrum-ToggleSwitch {
+	display: block;
+	margin: 0 auto;
+	max-width: 180px;
+	overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	text-align: left;
+	width: 90%;
+}
+
+.spectrum-BarLoader:not(:first-child) {
+	margin-top: 2em;
+}
+
+#processes > div:first-of-type{
+	margin: 0 auto;
+	max-width: 300px;
+}
+
+#outputs ul {
+	display: inline-block;
+	text-align: left;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#outputs ul li:not(:first-child) {
+	margin-top: 0.5em;
+}
+
+.bold {
+	font-weight: bold;
+	margin-right: 0.5em;
+}
+
+/* Settings */
+#settings {
+	display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-around;
+}
+
+.setting {
+	border: 1px solid black;
+	flex-shrink: 0;
+	margin: 0.5em 0;
+	padding: 0.5em;
+	min-height: 100px;
+	min-width: 200px;
+}
+
+.update-setting-outer {
+	display: inline-block;
+	height: 32px;
+	position: relative;
+}
+
+.update-setting-inner {
+	height: 18px;
+	opacity: 100;
+	position: absolute;
+		right: 50%;
+		top: 50%;
+	transform: translate(-50%, -50%);
+	transition: opacity 1s;
+	width: 18px;
+}
+
+.setting-circle-loader, .setting-success-icon, .setting-error-message {
+	position: absolute;
+	opacity: 100;
+	transition: opacity 0.5s;
+}
+
+.hidden {
+	opacity: 0;
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Micro Manager</title>
+	<!-- Spectrum CSS -->
+	<link rel="stylesheet" href="spectrum-css/2.10.0/spectrum-core.css"/>
+	<link rel="stylesheet" href="spectrum-css/2.10.0/spectrum-lightest.css"/>
+	<link rel="stylesheet" href="spectrum-css/2.10.0/spectrum-light.css"/>
+	<link rel="stylesheet" href="spectrum-css/2.10.0/spectrum-dark.css"/>
+	<link rel="stylesheet" href="spectrum-css/2.10.0/spectrum-darkest.css"/>
+	<!-- <script src="spectrum-css/2.10.0/icons/loadIcons.js"></script> --> 
+
+    <!-- Page CSS -->
+	<link rel="stylesheet" href="mainWindow.css">
+</head>
+
+
+<body class="spectrum spectrum--medium spectrum--light">
+
+    <!-- Icons -->
+    <svg xmlns="http://www.w3.org/2000/svg" data-url="../icons/spectrum-css-icons.svg" style="display: none;">
+        <symbol id="spectrum-css-icon-ArrowLeftMedium">
+            <path d="M12.99 4H3.414l2.283-2.283A1 1 0 1 0 4.283.303l-3.98 3.99a1 1 0 0 0 0 1.414l3.98 3.99a1 1 0 1 0 1.414-1.414L3.414 6h9.576a1 1 0 1 0 0-2z" class="spectrum-UIIcon--medium"></path><path d="M16.99 6H3.414l4.283-4.283A1 1 0 1 0 6.283.303l-5.98 5.99a1 1 0 0 0 0 1.414l5.98 5.99a1 1 0 1 0 1.414-1.414L3.414 8H16.99a1 1 0 0 0 0-2z" class="spectrum-UIIcon--large"></path>
+        </symbol>
+        <symbol id="spectrum-css-icon-CheckmarkMedium">
+            <path d="M4.5 10a1.022 1.022 0 0 1-.799-.384l-2.488-3a1 1 0 0 1 1.576-1.233L4.5 7.376l4.712-5.991a1 1 0 1 1 1.576 1.23l-5.51 7A.978.978 0 0 1 4.5 10z" class="spectrum-UIIcon--medium"></path><path d="M6 14a1 1 0 0 1-.789-.385l-4-5a1 1 0 1 1 1.577-1.23L6 11.376l7.213-8.99a1 1 0 1 1 1.576 1.23l-8 10a1 1 0 0 1-.789.384z" class="spectrum-UIIcon--large"></path>
+        </symbol>
+        <symbol id="spectrum-css-icon-ChevronDownMedium">
+            <path d="M9.99 1.01A1 1 0 0 0 8.283.303L5 3.586 1.717.303A1 1 0 1 0 .303 1.717l3.99 3.98a1 1 0 0 0 1.414 0l3.99-3.98a.997.997 0 0 0 .293-.707z" class="spectrum-UIIcon--medium"></path><path d="M11.99 1.51a1 1 0 0 0-1.707-.707L6 5.086 1.717.803A1 1 0 1 0 .303 2.217l4.99 4.99a1 1 0 0 0 1.414 0l4.99-4.99a.997.997 0 0 0 .293-.707z" class="spectrum-UIIcon--large"></path>
+        </symbol>
+        <symbol id="spectrum-css-icon-ChevronLeftMedium">
+            <path d="M5.697 8.283L2.414 5l3.283-3.283A1 1 0 1 0 4.283.303l-3.98 3.99a1 1 0 0 0 0 1.414l3.98 3.99a1 1 0 1 0 1.414-1.414z" class="spectrum-UIIcon--medium"></path><path d="M7.197 10.283L2.914 6l4.283-4.283A1 1 0 1 0 5.783.303l-4.99 4.99a1 1 0 0 0 0 1.414l4.99 4.99a1 1 0 1 0 1.414-1.414z" class="spectrum-UIIcon--large"></path>
+        </symbol>
+        <symbol id="spectrum-css-icon-CrossMedium">
+            <path d="M7.77 6.71L5.06 4l2.71-2.71A.75.75 0 1 0 6.71.23L4 2.94 1.29.23A.75.75 0 1 0 .23 1.29L2.94 4 .23 6.71a.75.75 0 1 0 1.06 1.06L4 5.06l2.71 2.71a.75.75 0 1 0 1.06-1.06z" class="spectrum-UIIcon--medium"></path><path d="M9.77 8.71L6.06 5l3.71-3.71A.75.75 0 1 0 8.71.23L5 3.94 1.29.23A.75.75 0 1 0 .23 1.29L3.94 5 .23 8.71a.75.75 0 1 0 1.06 1.06L5 6.06l3.71 3.71a.75.75 0 1 0 1.06-1.06z" class="spectrum-UIIcon--large"></path>
+        </symbol>
+        <symbol id="spectrum-css-icon-SuccessMedium">
+            <path d="M9 1a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm5.333 4.54l-6.324 8.13a.6.6 0 0 1-.437.23h-.037a.6.6 0 0 1-.425-.176l-3.893-3.9a.6.6 0 0 1 0-.849l.663-.663a.6.6 0 0 1 .848 0L7.4 10.991l5.256-6.754a.6.6 0 0 1 .843-.1l.728.566a.6.6 0 0 1 .106.837z" class="spectrum-UIIcon--medium"></path><path d="M11 2a9 9 0 1 0 9 9 9 9 0 0 0-9-9zm5.638 5.609L10.1 15.652a.5.5 0 0 1-.742.038L5.086 11.5a.5.5 0 0 1 0-.707l.707-.707a.5.5 0 0 1 .707 0L9.6 13.1l5.486-6.751a.5.5 0 0 1 .7-.073l.776.631a.5.5 0 0 1 .076.702z" class="spectrum-UIIcon--large"></path>
+        </symbol>
+    </svg>
+
+    <!-- Body -->
+    <div id="main-content-outer" class="drawer-open">
+        <div id="main-content-inner" class="spectrum-Typography">
+            <h1 class="spectrum-Heading1">Micro Manager</h1>
+            <hr class="spectrum-Rule spectrum-Rule--medium">
+            <div id="settings">
+                
+                <div id="setting-dropdown" class="setting setting-dropdown">
+                    <label for="setting-dropdown" class="spectrum-FieldLabel">Setting Title</label>
+                    <div class="spectrum-Dropdown is-open" style="width: 192px;">
+                        <button class="spectrum-FieldButton spectrum-Dropdown-trigger is-selected" aria-haspopup="true">
+                            <span class="spectrum-Dropdown-label">Ballard</span>
+                            <svg class="spectrum-Icon spectrum-UIIcon-ChevronDownMedium spectrum-Dropdown-icon" focusable="false" aria-hidden="true">
+                                <use xlink:href="#spectrum-css-icon-ChevronDownMedium" />
+                            </svg>
+                        </button>
+                        <div class="spectrum-Popover spectrum-Popover--bottom spectrum-Dropdown-popover is-open" style="width: 100%">
+                            <ul class="spectrum-Menu" role="listbox">
+                                <li class="spectrum-Menu-item is-selected" role="option" aria-selected="true" tabindex="0">
+                                    <span class="spectrum-Menu-itemLabel">Ballard</span>
+                                    <svg class="spectrum-Icon spectrum-UIIcon-CheckmarkMedium spectrum-Menu-checkmark" focusable="false" aria-hidden="true">
+                                        <use xlink:href="#spectrum-css-icon-CheckmarkMedium" />
+                                    </svg>
+                                </li>
+                                <li class="spectrum-Menu-item" role="option" tabindex="0">
+                                    <span class="spectrum-Menu-itemLabel">Fremont</span>
+                                </li>
+                                <li class="spectrum-Menu-item" role="option" tabindex="0">
+                                    <span class="spectrum-Menu-itemLabel">Greenwood</span>
+                                </li>
+                                <li class="spectrum-Menu-divider" role="separator"></li>
+                                <li class="spectrum-Menu-item is-disabled" role="option" aria-disabled="true">
+                                    <span class="spectrum-Menu-itemLabel">United States of America</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   	
+    
+	<div class="spectrum spectrum--dark open" id='slide-menu'>
+        <div class="toggle-slide-menu">
+            <button class="spectrum-ClearButton" id="toggle-slide-menu">
+                <svg class="spectrum-Icon spectrum-UIIcon-CrossMedium" focusable="false" aria-hidden="true">
+                    <use xlink:href="#spectrum-css-icon-CrossMedium" />
+                </svg>
+            </button>
+        </div>
+        <div></div>
+        
+        <div id="outputs">
+            <hr class="spectrum-Rule spectrum-Rule--large">
+            <h1 class="spectrum-Heading5">Outputs</h1>
+            <hr class="spectrum-Rule spectrum-Rule--medium">
+            <ul>
+                <li><span class="bold">Out</span><span class="spectrum-Label spectrum-Label--green">In Range</span></li>
+                <li><span class="bold">Output</span><span class="spectrum-Label spectrum-Label--blue">5</span></li>
+                <li><span class="bold">OutputOutput</span><span class="spectrum-Label spectrum-Label--red">Out of Range</span></li>
+            </ul>
+        </div>
+        <div id="processes">
+            <hr class="spectrum-Rule spectrum-Rule--large">
+            <h1 class="spectrum-Heading5">Processes</h1>
+            <hr class="spectrum-Rule spectrum-Rule--medium">
+            <div>
+                <div class="spectrum-BarLoader" value="0" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="spectrum-BarLoader-label">Loading</div>
+                    <div class="spectrum-BarLoader-percentage">0%</div>
+                    <div class="spectrum-BarLoader-track">
+                        <div class="spectrum-BarLoader-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="spectrum-BarLoader" value="50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                    <div class="spectrum-BarLoader-label">Loading</div>
+                    <div class="spectrum-BarLoader-percentage">50%</div>
+                    <div class="spectrum-BarLoader-track">
+                        <div class="spectrum-BarLoader-fill" style="width: 50%;"></div>
+                    </div>
+                </div>
+                <div class="spectrum-BarLoader" value="100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                    <div class="spectrum-BarLoader-label">Loading</div>
+                    <div class="spectrum-BarLoader-percentage">100%</div>
+                    <div class="spectrum-BarLoader-track">
+                        <div class="spectrum-BarLoader-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div id="boolean-toggles">
+            <hr class="spectrum-Rule spectrum-Rule--large">
+            <h1 class="spectrum-Heading5">Boolean Toggles</h1>
+            <hr class="spectrum-Rule spectrum-Rule--medium">
+            <div class="container">
+                <div class="spectrum-ToggleSwitch">
+                    <input type="checkbox" class="spectrum-ToggleSwitch-input" id="toggle-0">
+                    <span class="spectrum-ToggleSwitch-switch"></span>
+                    <label class="spectrum-ToggleSwitch-label" for="toggle-0">Toggle 0</label>
+                </div>
+                <div class="spectrum-ToggleSwitch">
+                    <input type="checkbox" class="spectrum-ToggleSwitch-input" id="toggle-1" checked>
+                    <span class="spectrum-ToggleSwitch-switch"></span>
+                    <label class="spectrum-ToggleSwitch-label" for="toggle-1">Tog</label>
+                </div>
+                <div class="spectrum-ToggleSwitch">
+                    <input type="checkbox" class="spectrum-ToggleSwitch-input" id="toggle-2" disabled>
+                    <span class="spectrum-ToggleSwitch-switch"></span>
+                    <label class="spectrum-ToggleSwitch-label" for="toggle-2">ToggleToggle 2</label>
+                </div>
+                <div class="spectrum-ToggleSwitch">
+                    <input type="checkbox" class="spectrum-ToggleSwitch-input" id="toggle-3" checked disabled>
+                    <span class="spectrum-ToggleSwitch-switch"></span>
+                    <label class="spectrum-ToggleSwitch-label" for="toggle-3">Toggle 3</label>
+                </div>
+            </div>
+		</div>
+		<div id="action-buttons">
+            <hr class="spectrum-Rule spectrum-Rule--large">
+            <h1 class="spectrum-Heading5">Action Buttons</h1>
+            <hr class="spectrum-Rule spectrum-Rule--medium">
+			<div class="spectrum-ButtonGroup spectrum-ButtonGroup--vertical">
+				<button class="spectrum-Button spectrum-Button--primary">
+					<span class="spectrum-Button-label">Active Button</span>
+				</button>
+				<button class="spectrum-Button spectrum-Button--primary" disabled>
+					<span class="spectrum-Button-label">Really Really Really Long Button</span>
+				</button>
+				<button class="spectrum-Button spectrum-Button--warning">
+					<span class="spectrum-Button-label">Warning Button</span>
+				</button>
+				<button class="spectrum-Button spectrum-Button--warning" disabled>
+					<span class="spectrum-Button-label">Disabled Warning</span>
+				</button>
+			</div>
+		</div>
+		
+	</div>
+	<script src="./mainWindow.js"></script>
+</body>
+</html>

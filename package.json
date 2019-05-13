@@ -1,0 +1,17 @@
+{
+  "name": "micromanager",
+  "version": "1.0.0",
+  "description": "A Micro Controller GUI",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Ben Veenema",
+  "license": "MIT",
+  "dependencies": {
+    "@adobe/spectrum-css": "github:adobe/spectrum-css",
+    "electron": "^5.0.1",
+    "electron-context-menu": "^0.12.1",
+    "mustache": "^3.0.1"
+  }
+}
