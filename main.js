@@ -2,6 +2,7 @@
 const electron = require('electron')
 const url = require('url')
 const path = require('path')
+const fs = require('fs')
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 const contextMenu = require('electron-context-menu')
 
@@ -107,6 +108,14 @@ const mainMenuTemplate = [
 				accelerator: (process.platform == 'darwin') ? 'Command+Q' : 'Ctrl+Q',
 				click(){
 					app.quit();
+				}
+			},
+			{
+				label: 'Load Mock Settings',
+				accelerator: (process.platform == 'darwin') ? 'Command+L' : 'Ctrl+L',
+				click(){
+					const ctrlObj = JSON.parse(fs.readFileSync('./mock-micro.json'))
+					mainWindow.webContents.send('settings:load', ctrlObj)
 				}
 			}
 		]

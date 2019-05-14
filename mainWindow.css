@@ -128,13 +128,13 @@ body {
 	min-width: 200px;
 }
 
-.update-setting-outer {
+.component-loader {
 	display: inline-block;
 	height: 32px;
 	position: relative;
 }
 
-.update-setting-inner {
+.component-loader-inner {
 	height: 18px;
 	opacity: 100;
 	position: absolute;
@@ -145,12 +145,20 @@ body {
 	width: 18px;
 }
 
+.setting-picker .component-loader-inner {
+	transform: translate(30%, -50%);
+}
+
 .setting-circle-loader, .setting-success-icon, .setting-error-message {
 	position: absolute;
 	opacity: 100;
 	transition: opacity 0.5s;
 }
 
-.hidden {
+.invisible {
 	opacity: 0;
+}
+
+.is-selected .component-loader {
+	display: none;
 }

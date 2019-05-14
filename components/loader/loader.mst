@@ -1,0 +1,24 @@
+<div class="component-loader-inner">
+		<div class="setting-circle-loader">
+				<div class="spectrum-CircleLoader spectrum-CircleLoader--small spectrum-CircleLoader--indeterminate">
+						<div class="spectrum-CircleLoader-track"></div>
+						<div class="spectrum-CircleLoader-fills">
+								<div class="spectrum-CircleLoader-fillMask1">
+								<div class="spectrum-CircleLoader-fillSubMask1">
+										<div class="spectrum-CircleLoader-fill"></div>
+								</div>
+								</div>
+								<div class="spectrum-CircleLoader-fillMask2">
+								<div class="spectrum-CircleLoader-fillSubMask2">
+										<div class="spectrum-CircleLoader-fill"></div>
+								</div>
+								</div>
+						</div>
+				</div>
+		</div>
+		<div class="setting-success-icon invisible">
+				<svg class="spectrum-Icon spectrum-UIIcon-SuccessMedium" focusable="false" aria-hidden="true">
+						<use xlink:href="#spectrum-css-icon-SuccessMedium" />
+				</svg>
+		</div>
+</div>

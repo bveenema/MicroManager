@@ -3,7 +3,7 @@ const electron = require('electron')
 const {ipcRenderer} = electron
 
 // Local Imports
-const setting = require('./setting.js')
+const Settings = require('./components/setting/setting-handler.js')
 
 // DOM elements
 const body = document.querySelector('body')
@@ -11,6 +11,7 @@ const mainContentOuter = document.querySelector('#main-content-outer')
 const mainContentInner = document.querySelector('#main-content-inner')
 const slideMenu = document.querySelector('#slide-menu')
 const toggleSlideMenuButton = slideMenu.querySelector('#toggle-slide-menu')
+const settingsContainer = document.querySelector('#settings')
 
 // Toggle State Container Listener
 toggleSlideMenuButton.addEventListener('click', () => {
@@ -26,7 +27,21 @@ toggleSlideMenuButton.addEventListener('click', () => {
 	
 })
 
-// Theme Change
+// Handle settings setup
+ipcRenderer.on('settings:load', function(e, ctrlObj){
+	if(ctrlObj){
+		// clear any settings in the settings div
+		settingsContainer.innerHTML = ''
+
+		// translate the ctrlObj object
+		console.log('Received ctrlObj', ctrlObj)
+		ctrlObj.settings.forEach((s) =>{
+			Settings.CreateSetting(s)
+		})
+	}
+})
+
+// Handle Theme Change
 ipcRenderer.on('theme:change', function(e, theme){
 	if(theme === 'light'){
 		body.classList.remove('spectrum--light')

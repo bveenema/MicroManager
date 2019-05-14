@@ -1,11 +1,31 @@
 {
 	"settings": [
 		{
-			"name": "Test",
+			"name": "Motor Seed",
+			"type": "input",
 			"command": 0,
 			"min": 0,
 			"max": 10,
-			"unit": "psi"
+			"unit": "RPM"
+		},
+		{
+			"name": "Target Pressure",
+			"type": "input",
+			"command": 1,
+			"min": 10,
+			"max": 500,
+			"unit": "PSI"
+		},
+		{
+			"name": "Options",
+			"type": "picker",
+			"command": 2,
+			"options": [
+				"Left",
+				"Right",
+				"Up",
+				"Down"
+			]
 		}
 	] 
 }

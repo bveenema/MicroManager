@@ -1,0 +1,9 @@
+<div class="setting-input">
+	<label for="{{id}}" class="spectrum-FieldLabel">{{title}} - {{unit}}</label>
+	<input id="{{id}}" placeholder="{{currentValue}}" name="field" value="" class="spectrum-Textfield">
+	<div class="component-loader"></div>
+	<div class="setting-error-message invisible">
+			<span class="spectrum-Label spectrum-Label--small spectrum-Label--red"></span>
+	</div>
+</div>
+
