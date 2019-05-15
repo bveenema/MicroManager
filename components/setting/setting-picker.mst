@@ -1,37 +1,23 @@
-<div id="setting-picker" class="setting setting-picker">
-	<label for="setting-picker" class="spectrum-FieldLabel">Setting Title</label>
-	<div class="spectrum-Dropdown is-open" style="width: 192px;">
-		<button class="spectrum-FieldButton spectrum-Dropdown-trigger is-selected" aria-haspopup="true">
-			<span class="spectrum-Dropdown-label">Ballard</span>
+<div class="setting-picker">
+	<label for="setting-picker" class="spectrum-FieldLabel">{{title}}</label>
+	<div class="spectrum-Dropdown" style="width: 192px;">
+		<button class="spectrum-FieldButton spectrum-Dropdown-trigger" aria-haspopup="true">
+			<span class="spectrum-Dropdown-label">{{currentValue}}</span>
 			<svg class="spectrum-Icon spectrum-UIIcon-ChevronDownMedium spectrum-Dropdown-icon" focusable="false" aria-hidden="true">
 				<use xlink:href="#spectrum-css-icon-ChevronDownMedium" />
 			</svg>
 		</button>
-		<div class="spectrum-Popover spectrum-Popover--bottom spectrum-Dropdown-popover is-open" style="width: 100%">
+		<div class="spectrum-Popover spectrum-Popover--bottom spectrum-Dropdown-popover" style="width: 100%">
 			<ul class="spectrum-Menu" role="listbox">
 				{{#options}}
-				<li class="spectrum-Menu-item is-selected" role="option" aria-selected="true" tabindex="0">
-					<span class="spectrum-Menu-itemLabel">{{.}}</span>
+				<li id="{{nodeID}}-{{value}}"class="spectrum-Menu-item {{#isSelected}}is-selected{{/isSelected}}" role="option" aria-selected="true" tabindex="0">
+					<span class="spectrum-Menu-itemLabel">{{value}}</span>
 					<svg class="spectrum-Icon spectrum-UIIcon-CheckmarkMedium spectrum-Menu-checkmark" focusable="false" aria-hidden="true">
 						<use xlink:href="#spectrum-css-icon-CheckmarkMedium" />
 					</svg>
 					<div class="component-loader"></div>
 				</li>
 				{{/options}}
-				<li class="spectrum-Menu-item" role="option" tabindex="0">
-					<span class="spectrum-Menu-itemLabel">Fremont</span>
-					<svg class="spectrum-Icon spectrum-UIIcon-CheckmarkMedium spectrum-Menu-checkmark" focusable="false" aria-hidden="true">
-						<use xlink:href="#spectrum-css-icon-CheckmarkMedium" />
-					</svg>
-					<div class="component-loader"></div>
-				</li>
-				<li class="spectrum-Menu-item" role="option" tabindex="0">
-					<span class="spectrum-Menu-itemLabel">Greenwood</span>
-					<svg class="spectrum-Icon spectrum-UIIcon-CheckmarkMedium spectrum-Menu-checkmark" focusable="false" aria-hidden="true">
-						<use xlink:href="#spectrum-css-icon-CheckmarkMedium" />
-					</svg>
-					<div class="component-loader"></div>
-				</li>
 			</ul>
 		</div>
 	</div>

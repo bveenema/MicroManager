@@ -6,6 +6,7 @@
 			"command": 0,
 			"min": 0,
 			"max": 10,
+			"default": 1,
 			"unit": "RPM"
 		},
 		{
@@ -14,12 +15,26 @@
 			"command": 1,
 			"min": 10,
 			"max": 500,
+			"default": 11,
 			"unit": "PSI"
 		},
 		{
-			"name": "Options",
+			"name": "Direction",
 			"type": "picker",
 			"command": 2,
+			"default": "Left",
+			"options": [
+				"Left",
+				"Right",
+				"Up",
+				"Down"
+			]
+		},
+		{
+			"name": "Direction",
+			"type": "picker",
+			"command": 2,
+			"default": "Left",
 			"options": [
 				"Left",
 				"Right",

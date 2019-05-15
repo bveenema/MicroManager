@@ -2,9 +2,12 @@
 const fs = require('fs')
 const Mustache = require('mustache')
 
+let LoaderID = 0
+
 class Loader {
 	constructor(parent) {
 		this.parent = parent
+		this.LoaderID = 'loader-' + LoaderID++
 	}
 
 	SetState(state) {

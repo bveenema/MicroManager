@@ -9,7 +9,7 @@ class SettingInput extends SettingBase {
 		this.max = settingObj.max
 		this.unit = settingObj.unit
 		this.currentState = 'idle'
-		this.loader
+		this.loaders[0]
 	}
 
 	CreateDOMNode() {
@@ -50,7 +50,7 @@ class SettingInput extends SettingBase {
 				setTimeout(function(){ this.UpdateSetting() }.bind(this), 1000) // Mock a return from micro
 				
 				// Display the loading icon
-				this.loader.SetState('loading')
+				this.loaders[0].SetState('loading')
 
 				this.currentState = 'updating'
 				break
@@ -59,7 +59,7 @@ class SettingInput extends SettingBase {
 				// TODO receive return from micro
 
 				// Change loader to success state
-				this.loader.SetState('success')
+				this.loaders[0].SetState('success')
 
 				this.currentState = 'idle'
 				break

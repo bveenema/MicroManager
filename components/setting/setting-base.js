@@ -11,16 +11,15 @@ class SettingBase{
 		this.type = settingObj.type
 		this.command = settingObj.command
 		this.nodeID = node_id
+		this.loaders = []
 	}
 
 	CreateDOMNode(template, attributes) {
 		// load the template
 		let contents = fs.readFileSync(__dirname + '\\' + template, 'utf8').toString()
-		console.log()
 
 		// Update the template
 		let rendered =  Mustache.render(contents, attributes)
-		console.log(rendered)
 
 		// convert the rendered template to a document fragment
 		let fragment = document.createRange().createContextualFragment(rendered)
@@ -36,9 +35,16 @@ class SettingBase{
 
 		// Create a Loader instance for each div
 		loaders.forEach((l) => {
-			this.loader = new Loader(l)
-			l.appendChild(this.loader.CreateFragment())
-			this.loader.SetState('idle')
+			// Create the loader and save it to the class
+			let temp = new Loader(l)
+			this.loaders.push(temp)
+
+			// Add the LoaderID to the parent element
+			l.setAttribute('id', temp.LoaderID)
+
+			// Add the loader to the DOM and set state to idle
+			l.appendChild(temp.CreateFragment())
+			temp.SetState('idle')
 		})
 
 		return node
