@@ -162,3 +162,13 @@ body {
 .is-selected .component-loader {
 	display: none;
 }
+
+.spectrum-Slider .component-loader {
+	position: absolute;
+}
+
+.spectrum-Slider .component-loader-inner {
+	height: 16px;
+	width: 16px;
+	transform: translate(50%, -50%)
+}

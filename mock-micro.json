@@ -1,12 +1,23 @@
 {
 	"settings": [
 		{
+			"name": "Volume",
+			"type": "slider",
+			"command": 4,
+			"min": 0,
+			"max": 10,
+			"default": 1,
+			"float": false,
+			"unit": "dB"
+		},
+		{
 			"name": "Motor Seed",
 			"type": "input",
 			"command": 0,
 			"min": 0,
 			"max": 10,
 			"default": 1,
+			"float": false,
 			"unit": "RPM"
 		},
 		{
@@ -16,6 +27,7 @@
 			"min": 10,
 			"max": 500,
 			"default": 11,
+			"float": false,
 			"unit": "PSI"
 		},
 		{
@@ -33,7 +45,7 @@
 		{
 			"name": "Direction",
 			"type": "picker",
-			"command": 2,
+			"command": 3,
 			"default": "Left",
 			"options": [
 				"Left",
