@@ -45,10 +45,105 @@
             <h1 class="spectrum-Heading1">Micro Manager</h1>
             <hr class="spectrum-Rule spectrum-Rule--medium">
             <div id="settings">
-                
+                <div class="setting">
+                    <div id="test-slider" class="spectrum-Slider spectrum-Slider--filled">
+                        <div class="spectrum-Slider-labelContainer">
+                          <label class="spectrum-Slider-label" id="spectrum-Slider-label-6" for="spectrum-Slider-input-6">Slider Label</label>
+                          <div class="spectrum-Slider-value" role="textbox" aria-readonly="true" aria-labelledby="spectrum-Slider-label-6">14</div>
+                        </div>
+                        <div class="spectrum-Slider-controls">
+                          <div class="spectrum-Slider-track" style="width: 40%"></div>
+                          <div class="spectrum-Slider-handle" style="left: 40%;">
+                            <input type="range" class="spectrum-Slider-input" value="14" step="2" min="10" max="20" id="spectrum-Slider-input-6">
+                          </div>
+                          <div class="spectrum-Slider-track" style="width: 60%"></div>
+                        </div>
+                      </div>
+                </div>
             </div>
         </div>
     </div>
+
+
+    <script>
+        makeSlider(document.getElementById('test-slider'))
+        function makeSlider(slider) {
+            let tracks = slider.querySelectorAll('.spectrum-Slider-track');
+            let leftTrack = tracks[0];
+            let rightTrack = tracks[1];
+            let handle = slider.querySelector('.spectrum-Slider-handle');
+            let fill = slider.querySelector('.spectrum-Slider-fill');
+
+            let buffers = slider.querySelectorAll('.spectrum-Slider-buffer');
+            if (buffers.length) {
+                let leftBuffer = buffers[0];
+                let rightBuffer = buffers[1];
+                let bufferedAmount = parseInt(handle.style.left, 10) + parseInt(rightBuffer.style.width, 10);
+            }
+
+            function onMouseDown(e, sliderHandle) {
+                console.log("Mouse Down")
+                window.addEventListener('mouseup', onMouseUp);
+                window.addEventListener('mousemove', onMouseMove);
+            }
+            function onMouseUp(e, sliderHandle) {
+                console.log("Mouse Up")
+                window.removeEventListener('mouseup', onMouseUp);
+                window.removeEventListener('mousemove', onMouseMove);
+            }
+            function onMouseMove(e, sliderHandle) {
+                let sliderOffsetWidth = slider.offsetWidth;
+                let sliderOffsetLeft = slider.offsetLeft + slider.offsetParent.offsetLeft;
+
+                let x = Math.max(Math.min(e.x-sliderOffsetLeft, sliderOffsetWidth), 0);
+                let percent = (x / sliderOffsetWidth) * 100;
+                if (leftTrack && rightTrack) {
+                    leftTrack.style.width = percent + '%';
+                    rightTrack.style.width = (100 - percent) + '%';
+                }
+                handle.style.left = percent + '%';
+
+                if (buffers.length) {
+                if (percent >= bufferedAmount) {
+                    // Don't show right buffer bar
+                    rightBuffer.style.width = 0;
+                    rightBuffer.style.left = 'auto';
+                    rightBuffer.style.right = 'auto';
+                    leftBuffer.style.width = bufferedAmount + '%';
+                }
+                else {
+                    leftBuffer.style.width = percent + '%';
+                    rightBuffer.style.width = 'auto';
+                    rightBuffer.style.left = percent + '%';
+                    rightBuffer.style.right = (100 - bufferedAmount) + '%';
+                }
+                }
+
+                if (fill) {
+                fill.style.left = (percent < 50 ? percent : 50) + '%';
+                fill.style.width = (percent < 50 ? 50 - percent : percent - 50) + '%';
+                if (percent > 50) {
+                    fill.classList.add('spectrum-Slider-fill--right');
+                }
+                else {
+                    fill.classList.remove('spectrum-Slider-fill--right');
+                }
+                }
+            }
+
+            // Set initial track position
+            let percent = parseInt(handle.style.left, 10);
+            if (leftTrack && rightTrack) {
+                leftTrack.style.width = percent + '%';
+                rightTrack.style.width = (100 - percent) + '%';
+            }
+
+            if (!slider.classList.contains('is-disabled')) {
+                slider.addEventListener('mousedown', onMouseDown);
+            }
+        }
+
+    </script>
    	
     
 	<div class="spectrum spectrum--dark open" id='slide-menu'>

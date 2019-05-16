@@ -25,6 +25,5 @@ module.exports = {
 	
 		// Attach the node to the setting div
 		document.getElementById('settings').appendChild(node)
-
 	}
 }
