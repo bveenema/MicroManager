@@ -4,6 +4,7 @@ const Mustache = require('mustache')
 
 // Local Imports
 const Loader = require('../loader/loader.js')
+const ErrorMessage = require('../error-message/error-message.js')
 
 class SettingBase{
 	constructor(settingObj, node_id) {
@@ -12,6 +13,11 @@ class SettingBase{
 		this.command = settingObj.command
 		this.nodeID = node_id
 		this.loaders = []
+		this.minValue = settingObj.min
+		this.maxValue = settingObj.max
+		this.currentValue = settingObj.default
+		this.isFloat = settingObj.float
+		this.floatPrecision = settingObj.floatPrecision
 	}
 
 	CreateDOMNode(template, attributes) {
@@ -31,7 +37,7 @@ class SettingBase{
 		node.appendChild(fragment)
 
 		// Search for 'component-loader' divs
-		let loaders = node.querySelectorAll('.component-loader');
+		let loaders = node.querySelectorAll('.component-loader')
 
 		// Create a Loader instance for each div
 		loaders.forEach((l) => {
@@ -47,22 +53,22 @@ class SettingBase{
 			temp.SetState('idle')
 		})
 
+		// Create the error message
+		let eMsg = node.querySelector('.error-message')
+		if(eMsg) {
+			this.ErrorMessage = new ErrorMessage(eMsg)
+			eMsg.classList.add('invisible')
+			eMsg.setAttribute('id', this.ErrorMessage.ErrorMessageID)
+			eMsg.appendChild(this.ErrorMessage.CreateFragment())
+			
+		}
+
 		return node
 	}
 
 	AttachListener(){}
 
-	// Toggle the error message
-	ToggleErrorLabel(message){
-		let node = document.getElementById(this.nodeID)
-		let el = node.querySelector('.setting-error-message')
-		if(message){
-			el.querySelector('span').innerText = message
-			el.classList.remove('invisible')
-		} else {
-			el.classList.add('invisible')
-		}
-	}
+	Init(){}
 }
 
 module.exports = SettingBase

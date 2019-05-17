@@ -13,4 +13,5 @@
 			<div class="component-loader"></div>
 		</div>
 	</div>
+	<div class="error-message">
 </div>

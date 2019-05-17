@@ -25,7 +25,6 @@ class SettingPicker extends SettingBase {
 			}),
 			currentValue: this.currentValue,
 			nodeID: this.nodeID,
-
 		})
 	}
 

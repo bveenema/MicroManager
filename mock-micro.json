@@ -4,10 +4,21 @@
 			"name": "Volume",
 			"type": "slider",
 			"command": 4,
+			"min": 20,
+			"max": 30,
+			"default": 20,
+			"float": false,
+			"unit": "dB"
+		},
+		{
+			"name": "Volume",
+			"type": "slider",
+			"command": 4,
 			"min": 0,
 			"max": 10,
 			"default": 1,
-			"float": false,
+			"float": true,
+			"floatPrecision": 2,
 			"unit": "dB"
 		},
 		{

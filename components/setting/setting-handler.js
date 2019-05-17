@@ -22,6 +22,9 @@ module.exports = {
 
 		// Create a DOM Node
 		let node = temp.CreateDOMNode()
+
+		// Initialize the Setting
+		temp.Init(node)
 		
 		// Attach a listener
 		temp.AttachListener(node)

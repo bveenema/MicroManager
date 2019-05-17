@@ -1,13 +1,13 @@
 <div class="setting-picker">
 	<label for="setting-picker" class="spectrum-FieldLabel">{{title}}</label>
-	<div class="spectrum-Dropdown" style="width: 192px;">
+	<div class="spectrum-Dropdown">
 		<button class="spectrum-FieldButton spectrum-Dropdown-trigger" aria-haspopup="true">
 			<span class="spectrum-Dropdown-label">{{currentValue}}</span>
 			<svg class="spectrum-Icon spectrum-UIIcon-ChevronDownMedium spectrum-Dropdown-icon" focusable="false" aria-hidden="true">
 				<use xlink:href="#spectrum-css-icon-ChevronDownMedium" />
 			</svg>
 		</button>
-		<div class="spectrum-Popover spectrum-Popover--bottom spectrum-Dropdown-popover" style="width: 100%">
+		<div class="spectrum-Popover spectrum-Popover--bottom spectrum-Dropdown-popover">
 			<ul class="spectrum-Menu" role="listbox">
 				{{#options}}
 				<li id="{{nodeID}}-{{value}}"class="spectrum-Menu-item {{#isSelected}}is-selected{{/isSelected}}" role="option" aria-selected="true" tabindex="0">
@@ -21,4 +21,5 @@
 			</ul>
 		</div>
 	</div>
+	<div class="error-message">
 </div>

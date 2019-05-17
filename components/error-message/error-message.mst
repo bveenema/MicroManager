@@ -1,0 +1,1 @@
+<span class="spectrum-Label spectrum-Label--small spectrum-Label--red">{{errorMessage}}</span>

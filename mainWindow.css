@@ -42,6 +42,7 @@ body {
 	text-align: center;
 	transition: 0.15s;
 	width: var(--slide-open-width);
+	z-index: 100;
 }
 
 #slide-menu.open {
@@ -49,9 +50,6 @@ body {
 }
 
 @media screen and (max-width: 700px) {
-  #main-content-outer, #main-content-outer.drawer-open {
-    padding-right: 0;
-  }
 	#slide-menu {
 		right: calc(var(--slide-closed-width) - 100vw);
     width: 100vw;
@@ -113,17 +111,17 @@ body {
 
 /* Settings */
 #settings {
-	display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: space-around;
+	display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		grid-gap: 1em;
+		place-items: stretch;
+	margin: 0 10px;
 }
 
 .setting {
 	border: 1px solid black;
-	flex-shrink: 0;
-	margin: 0.5em 0;
 	padding: 0.5em;
+	position: relative;
 	min-height: 100px;
 	min-width: 200px;
 }
@@ -132,6 +130,7 @@ body {
 	display: inline-block;
 	height: 32px;
 	position: relative;
+	width: 0;
 }
 
 .component-loader-inner {
@@ -149,10 +148,14 @@ body {
 	transform: translate(30%, -50%);
 }
 
-.setting-circle-loader, .setting-success-icon, .setting-error-message {
+.setting-circle-loader, .setting-success-icon, .error-message {
 	position: absolute;
 	opacity: 100;
 	transition: opacity 0.5s;
+}
+
+.error-message {
+	bottom: 5px;
 }
 
 .invisible {
@@ -171,4 +174,16 @@ body {
 	height: 16px;
 	width: 16px;
 	transform: translate(50%, -50%)
+}
+
+.spectrum-Textfield, .spectrum-Dropdown {
+	width: 97%;
+}
+
+.spectrum-Slider-labelContainer {
+	padding-bottom: 4px;
+}
+
+.spectrum-Dropdown-popover {
+	width: 100%;
 }

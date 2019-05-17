@@ -8,6 +8,7 @@ class Loader {
 	constructor(parent) {
 		this.parent = parent
 		this.LoaderID = 'loader-' + LoaderID++
+		this.currentState = 'idle'
 	}
 
 	SetState(state) {
@@ -24,6 +25,11 @@ class Loader {
 			this.parent.querySelector('.setting-success-icon').classList.remove('invisible')
 			setTimeout(function(){this.SetState('idle')}.bind(this), 1000)
 		}
+		this.currentState = state
+	}
+
+	get state() {
+		return this.currentState
 	}
 
 	CreateFragment(){
