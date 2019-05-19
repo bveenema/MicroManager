@@ -32,6 +32,19 @@ class Loader {
 		return this.currentState
 	}
 
+	Init(window){
+		// Add the CSS file to the head
+		var css = document.createElement('css')
+		css.href = '../../components/loader/loader.css'
+		css.type = "text/css"
+		css.rel = "stylesheet"
+		 
+		window.getElementsByTagName('head')[0].appendChild(css)
+
+		// Create and return the fragment
+		return CreateFragment()
+	}
+
 	CreateFragment(){
 		// load the template
 		let contents = fs.readFileSync(__dirname + '/loader.mst', 'utf8').toString()

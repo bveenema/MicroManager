@@ -2,8 +2,12 @@
 const electron = require('electron')
 const {ipcRenderer} = electron
 
+// Local Imports
+const DeviceSelector = require('../../components/device-selector/device-selector.js')
+
 // DOM Elements
 const body = document.querySelector('body')
+const deviceContainer = document.querySelector('#device-content')
 
 // Handle Theme Change
 ipcRenderer.on('theme:change', function(e, theme){
@@ -21,4 +25,19 @@ ipcRenderer.on('theme:change', function(e, theme){
 		body.classList.remove('spectrum--dark')
 		body.classList.add('spectrum--light')
 	}
+})
+
+// Handle Retrieve Serial Devices
+ipcRenderer.on('serial:devices', function(e, devices){
+	console.log('got devices:',devices)
+
+	// Clear the current device list
+	deviceContainer.innerHTML = ''
+
+	// Create a device element for each device
+	devices.forEach((device) => {
+		let temp = new DeviceSelector(deviceContainer)
+		let fragment = temp.CreateFragment(device)
+		deviceContainer.appendChild(fragment)
+	})
 })

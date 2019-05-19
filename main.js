@@ -5,7 +5,8 @@ const {app, Menu} = electron;
 const contextMenu = require('electron-context-menu')
 
 // Local Imports
-require('./serial.js')
+
+// Windows
 const MainWindow = require('./windows/main/main.js')
 const MicroDebugWindow = require('./windows/micro-debug/micro-debug.js')
 const ConnectDeviceWindow = require('./windows/connect-device/connect-device.js')
@@ -33,6 +34,7 @@ app.on('ready', function(){
 
 	// Build menu from template
 	const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+
 	// Insert menu
 	Menu.setApplicationMenu(mainMenu);
 })
