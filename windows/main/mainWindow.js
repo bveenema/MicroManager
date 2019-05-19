@@ -3,7 +3,7 @@ const electron = require('electron')
 const {ipcRenderer} = electron
 
 // Local Imports
-const Settings = require('./components/setting/setting-handler.js')
+const Settings = require('../../components/setting/setting-handler.js')
 
 // DOM elements
 const body = document.querySelector('body')

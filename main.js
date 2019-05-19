@@ -1,13 +1,17 @@
 // Module Imports
 const electron = require('electron')
-const url = require('url')
-const path = require('path')
 const fs = require('fs')
-const {app, BrowserWindow, Menu, ipcMain} = electron;
+const {app, Menu} = electron;
 const contextMenu = require('electron-context-menu')
 
 // Local Imports
+require('./serial.js')
+const MainWindow = require('./windows/main/main.js')
+const MicroDebugWindow = require('./windows/micro-debug/micro-debug.js')
+const ConnectDeviceWindow = require('./windows/connect-device/connect-device.js')
 
+// THEME
+let currentTheme = 'default'
 
 // SET ENC
 // process.env.NODE_ENV = 'production'
@@ -21,74 +25,16 @@ contextMenu({
 });
 
 let mainWindow;
-let connectDeviceWindow;
 
 // Listen for app to be ready
 app.on('ready', function(){
-	// Create new window
-	mainWindow = new BrowserWindow(
-		{
-			show: false,
-			webPreferences: {
-				nodeIntegration: true
-			}
-		})
-
-	mainWindow.maximize()
-
-	// Load html into window
-	mainWindow.loadURL(url.format({
-		pathname: path.join(__dirname, 'mainWindow.html'),
-		protocol: 'file:',
-		slashes: true
-	}))
-
-	// Show page after it's rendered
-	mainWindow.once('ready-to-show', () => {
-		mainWindow.show()
-	})
-
-	// Quit app when closed
-	mainWindow.on('closed', function(){
-		app.quit();
-	})
+	// Create the Main Window
+	MainWindow.Create()
 
 	// Build menu from template
 	const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 	// Insert menu
 	Menu.setApplicationMenu(mainMenu);
-})
-
-// Handle create add window
-function createConnectDeviceWindow(){
-	// Create new window
-	connectDeviceWindow = new BrowserWindow({
-		parent: mainWindow,
-		width: 300,
-		height: 200,
-		title: 'Connect To',
-		webPreferences: {
-			nodeIntegration: true
-		}
-	})
-	// Load html into window
-	connectDeviceWindow.loadURL(url.format({
-		pathname: path.join(__dirname, 'connectDeviceWindow.html'),
-		protocol: 'file:',
-		slashes: true
-	}))
-
-	// Garbage collection handle
-	connectDeviceWindow.on('close', function(){
-		connectDeviceWindow=null
-	})
-}
-
-// Catch item:add
-ipcMain.on('item:add', function(e, item){
-	console.log(item)
-	mainWindow.webContents.send('item:add', item)
-	connectDeviceWindow.close()
 })
 
 // Create Menu Template
@@ -100,7 +46,8 @@ const mainMenuTemplate = [
 				label: 'Connect',
 				accelerator: (process.platform == 'darwin') ? 'Command+K' : 'Ctrl+K',
 				click(){
-					createConnectDeviceWindow()
+					ConnectDeviceWindow.Create()
+					ConnectDeviceWindow.Theme()
 				}
 			},
 			{
@@ -115,7 +62,7 @@ const mainMenuTemplate = [
 				accelerator: (process.platform == 'darwin') ? 'Command+L' : 'Ctrl+L',
 				click(){
 					const ctrlObj = JSON.parse(fs.readFileSync('./mock-micro.json'))
-					mainWindow.webContents.send('settings:load', ctrlObj)
+					MainWindow.LoadSettings(ctrlObj)
 				}
 			}
 		]
@@ -129,23 +76,39 @@ const mainMenuTemplate = [
 					{
 						label: 'Default',
 						click(){
-							mainWindow.webContents.send('theme:change', 'default')
+							currentTheme = 'default'
+							MainWindow.Theme(currentTheme)							
+							MicroDebugWindow.Theme(currentTheme)
+							ConnectDeviceWindow.Theme(currentTheme)
 						}
 					},
 					{
 						label: 'Light',
 						click(){
-							mainWindow.webContents.send('theme:change', 'light')
+							currentTheme = 'light'
+							MainWindow.Theme(currentTheme)
+							MicroDebugWindow.Theme(currentTheme)
+							ConnectDeviceWindow.Theme(currentTheme)
 						}
 					},
 					{
 						label: 'Dark',
 						click(){
-							mainWindow.webContents.send('theme:change', 'dark')
+							currentTheme = 'dark'
+							MainWindow.Theme(currentTheme)
+							MicroDebugWindow.Theme(currentTheme)
+							ConnectDeviceWindow.Theme(currentTheme)
 						}
 					}
-					
 				]
+			},
+			{
+				label: 'Micro Debug',
+				accelerator: (process.platform == 'darwin') ? 'Command+D' : 'Ctrl+D',
+				click(){
+					MicroDebugWindow.Create()
+					MicroDebugWindow.Theme(currentTheme)
+				}
 			}
 		]
 	}
