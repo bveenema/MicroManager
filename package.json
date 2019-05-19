@@ -4,7 +4,8 @@
   "description": "A Micro Controller GUI",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "postinstall": "electron-builder install-app-deps"
   },
   "author": "Ben Veenema",
   "license": "MIT",
@@ -12,6 +13,11 @@
     "@adobe/spectrum-css": "github:adobe/spectrum-css",
     "electron": "^5.0.1",
     "electron-context-menu": "^0.12.1",
-    "mustache": "^3.0.1"
+    "mustache": "^3.0.1",
+    "serialport": "^7.1.5"
+  },
+  "devDependencies": {
+    "electron-builder": "^20.40.2",
+    "electron-rebuild": "^1.8.4"
   }
 }
