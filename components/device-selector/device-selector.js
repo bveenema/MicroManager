@@ -2,6 +2,9 @@
 const fs = require('fs')
 const Mustache = require('mustache')
 
+// Local Imports
+const Loader = require('../loader/loader')
+
 let DeviceSelectorID = 0
 
 class DeviceSelector {
@@ -35,6 +38,9 @@ class DeviceSelector {
 
 		// convert the rendered template to a document fragment
 		let fragment = document.createRange().createContextualFragment(rendered)
+
+		this.loaders = Loader.CreateLoaders(fragment)
+		
 
 		return fragment
 	}

@@ -17,7 +17,7 @@ function createConnectDeviceWindow(){
 		alwaysOnTop: true,
 		autoHideMenuBar: true,
 		height: 170,
-		width: 200,
+		width: 300,
 		title: 'Connect To',
 		webPreferences: {
 			nodeIntegration: true

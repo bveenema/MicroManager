@@ -11,6 +11,53 @@ class Loader {
 		this.currentState = 'idle'
 	}
 
+	// Create Loaders
+	// Serches a node for '.component-loader' divs and returns new instances for each
+	// \param[node/fragment] node - a node or fragment that may contain a '.component-loader' div
+	static CreateLoaders(node) {
+		if(node){
+			// find any/all divs containing component-loader class
+			let loaderDivs = node.querySelectorAll('.component-loader')
+
+			if(loaderDivs.length > 0){
+				// Create new Loader instances
+				let loaders = []
+				loaderDivs.forEach((loader) => {
+					loaders.push(new Loader(loader))
+				})
+
+				// Attach HTML fragments
+				loaders.forEach((Loader, i) => {
+					let fragment = Loader.CreateFragment()
+					loaderDivs[i].appendChild(fragment)
+					Loader.SetState('idle')
+				})
+
+				// Append CSS file to the document
+				let ownerDocument = node.ownerDocument
+				// Check if CSS file alreay present
+				let cssFiles = ownerDocument.styleSheets
+				let hasCSSFile = false
+				for(let i=0; i< cssFiles.length; i++){
+					console.log(cssFiles[i].href)
+					if(cssFiles[i].href.includes('loader/loader.css')) hasCSSFile = true
+				}
+				console.log('Has CSS file? :', hasCSSFile)
+
+				if(hasCSSFile == false) {
+					var css = document.createElement('link')
+						css.href = '../../components/loader/loader.css'
+						css.type = "text/css"
+						css.rel = "stylesheet"
+					ownerDocument.getElementsByTagName('head')[0].appendChild(css)
+				}
+			
+
+				return loaders
+			}
+		}
+	}
+
 	SetState(state) {
 		if(state === 'idle'){
 			this.parent.querySelector('.setting-circle-loader').classList.add('invisible')
