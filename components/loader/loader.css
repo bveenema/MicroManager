@@ -20,6 +20,10 @@
 	transform: translate(30%, -50%);
 }
 
+#device-content .component-loader-inner {
+	transform: translate(50%, -50%);
+}
+
 .setting-circle-loader, .setting-success-icon {
 	position: absolute;
 	opacity: 100;

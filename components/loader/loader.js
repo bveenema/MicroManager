@@ -1,8 +1,11 @@
 // Module Imports
 const fs = require('fs')
 const Mustache = require('mustache')
+const url = require('url')
+const path = require('path')
 
 let LoaderID = 0
+let AppendCSSCount = 0
 
 class Loader {
 	constructor(parent) {
@@ -33,28 +36,41 @@ class Loader {
 					Loader.SetState('idle')
 				})
 
-				// Append CSS file to the document
-				let ownerDocument = node.ownerDocument
-				// Check if CSS file alreay present
-				let cssFiles = ownerDocument.styleSheets
-				let hasCSSFile = false
-				for(let i=0; i< cssFiles.length; i++){
-					console.log(cssFiles[i].href)
-					if(cssFiles[i].href.includes('loader/loader.css')) hasCSSFile = true
-				}
-				console.log('Has CSS file? :', hasCSSFile)
-
-				if(hasCSSFile == false) {
-					var css = document.createElement('link')
-						css.href = '../../components/loader/loader.css'
-						css.type = "text/css"
-						css.rel = "stylesheet"
-					ownerDocument.getElementsByTagName('head')[0].appendChild(css)
-				}
-			
+				// Append CSS file to the document, stagger timing to prevent multiple adds of same file
+				setTimeout(function(){ 
+					Loader.AppendCSS(url.format({
+						pathname: path.join(__dirname, 'loader.css'),
+						protocol: 'file:',
+						slashes: true
+					}))
+				}, AppendCSSCount)
+				AppendCSSCount += 5
 
 				return loaders
 			}
+		}
+	}
+
+	static AppendCSS(file){
+		// Reset AppendCSSCount
+		AppendCSSCount = 0
+
+		// Check if CSS file alreay present
+		let cssFiles = document.styleSheets
+		let hasCSSFile = false
+		for(let i=0; i< cssFiles.length; i++){
+			console.log(cssFiles[i].href)
+			if(cssFiles[i].href.includes(file)) hasCSSFile = true
+		}
+
+		console.log(hasCSSFile)
+		// Add CSS file if no present
+		if(hasCSSFile == false) {
+			var css = document.createElement('link')
+				css.href = file
+				css.type = "text/css"
+				css.rel = "stylesheet"
+			document.getElementsByTagName('head')[0].appendChild(css)
 		}
 	}
 
