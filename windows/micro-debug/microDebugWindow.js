@@ -9,9 +9,18 @@ const debugContent = document.querySelector('#debug-content')
 // Handle add debug message
 ipcRenderer.on('micro:debug', function(e, message){
     if(message){
-        let newMessage = document.createElement('div')
+		// Detect if scrollbar is at bottom
+		const isScrolledToBottom = debugContent.scrollHeight -debugContent.clientHeight <= debugContent.scrollTop + 1
+		
+		// Add the new message
+		let newMessage = document.createElement('div')
         newMessage.innerText = message
-        debugContent.appendChild(newMessage)
+		debugContent.appendChild(newMessage)
+		
+		// keep scrollbar at bottom if it was already there
+		if(isScrolledToBottom) {
+			debugContent.scrollTop = debugContent.scrollHeight - debugContent.clientHeight
+		}
     }
 })
 

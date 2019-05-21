@@ -14,10 +14,9 @@ let currentTheme;
 function createConnectDeviceWindow(){
 	// Create new window
 	window = new BrowserWindow({
-		alwaysOnTop: true,
 		autoHideMenuBar: true,
-		height: 170,
-		width: 300,
+		height: 102+38,
+		width: 284+16,
 		title: 'Connect To',
 		webPreferences: {
 			nodeIntegration: true

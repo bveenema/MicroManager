@@ -11,7 +11,6 @@ let currentTheme;
 function createMicroDebugWindow(){
 	// create new window
 	microDebugWindow = new BrowserWindow({
-		alwaysOnTop: true,
 		autoHideMenuBar: true,
 		width: 400,
 		height: 600,
@@ -39,15 +38,19 @@ function createMicroDebugWindow(){
 	microDebugWindow.on('close', function(){
 		microDebugWindow=null
 	})
+
+	console.log('microDebugWindow: ',microDebugWindow)
 }
 
 module.exports = {
-    Create: createMicroDebugWindow,
-    Update: function(data){
-        if(microDebugWindow){
-            microDebugWindow.webContents.send('micro:debug', data)
-        }
+	Create: createMicroDebugWindow,
+
+	Update: function(data){
+		if(microDebugWindow){
+				microDebugWindow.webContents.send('micro:debug', data)
+		}
 	},
+
 	Theme: function(theme){
 		currentTheme = theme
 		if(microDebugWindow){

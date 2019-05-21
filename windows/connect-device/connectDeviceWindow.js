@@ -9,6 +9,8 @@ const DeviceSelector = require('../../components/device-selector/device-selector
 const body = document.querySelector('body')
 const deviceContainer = document.querySelector('#device-content')
 
+let DeviceSelectors = []
+
 // Handle Theme Change
 ipcRenderer.on('theme:change', function(e, theme){
     console.log('updating theme:',theme)
@@ -29,15 +31,14 @@ ipcRenderer.on('theme:change', function(e, theme){
 
 // Handle Retrieve Serial Devices
 ipcRenderer.on('serial:devices', function(e, devices){
-	console.log('got devices:',devices)
+	// Resize the window based on number of devices
+	window.resizeBy(0, 36*(devices.length-1))
 
 	// Clear the current device list
 	deviceContainer.innerHTML = ''
 
 	// Create a device element for each device
 	devices.forEach((device) => {
-		let temp = new DeviceSelector(deviceContainer)
-		let fragment = temp.CreateFragment(device)
-		deviceContainer.appendChild(fragment)
+		DeviceSelectors.push(DeviceSelector.Create(deviceContainer, device))
 	})
 })

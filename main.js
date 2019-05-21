@@ -5,6 +5,7 @@ const {app, Menu} = electron;
 const contextMenu = require('electron-context-menu')
 
 // Local Imports
+const {UpdateMockSerial} = require('./serial')
 
 // Windows
 const MainWindow = require('./windows/main/main.js')
@@ -131,6 +132,17 @@ if(process.env.NODE_ENV !== 'production'){
 				accelerator: (process.platform == 'darwin') ? 'Command+I' : 'Ctrl+I',
 				click(item, focusedWindow){
 					focusedWindow.toggleDevTools();
+				}
+			},
+			{
+				label: 'Use Mock Micros',
+				type: 'checkbox',
+				checked: process.useMockMicros,
+				accelerator: (process.platform == 'darwin') ? 'Command+M' : 'Ctrl+M',
+				click(){
+					process.useMockMicros = (process.useMockMicros) ? false : true
+					UpdateMockSerial();
+					console.log("Use Mock Micros:",process.useMockMicros)
 				}
 			},
 			{

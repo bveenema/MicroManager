@@ -1,11 +1,11 @@
 // Module Imports
 const fs = require('fs')
 const Mustache = require('mustache')
-const url = require('url')
-const path = require('path')
+
+// Local Imports
+const {ImportCSS} = require('../../util/ImportCSS')
 
 let LoaderID = 0
-let AppendCSSCount = 0
 
 class Loader {
 	constructor(parent) {
@@ -36,43 +36,14 @@ class Loader {
 					Loader.SetState('idle')
 				})
 
-				// Append CSS file to the document, stagger timing to prevent multiple adds of same file
-				setTimeout(function(){ 
-					Loader.AppendCSS(url.format({
-						pathname: path.join(__dirname, 'loader.css'),
-						protocol: 'file:',
-						slashes: true
-					}))
-				}, AppendCSSCount)
-				AppendCSSCount += 5
+				// Append CSS file to the document
+				ImportCSS(__dirname, 'loader.css')
 
 				return loaders
 			}
 		}
 	}
 
-	static AppendCSS(file){
-		// Reset AppendCSSCount
-		AppendCSSCount = 0
-
-		// Check if CSS file alreay present
-		let cssFiles = document.styleSheets
-		let hasCSSFile = false
-		for(let i=0; i< cssFiles.length; i++){
-			console.log(cssFiles[i].href)
-			if(cssFiles[i].href.includes(file)) hasCSSFile = true
-		}
-
-		console.log(hasCSSFile)
-		// Add CSS file if no present
-		if(hasCSSFile == false) {
-			var css = document.createElement('link')
-				css.href = file
-				css.type = "text/css"
-				css.rel = "stylesheet"
-			document.getElementsByTagName('head')[0].appendChild(css)
-		}
-	}
 
 	SetState(state) {
 		if(state === 'idle'){
@@ -93,19 +64,6 @@ class Loader {
 
 	get state() {
 		return this.currentState
-	}
-
-	Init(window){
-		// Add the CSS file to the head
-		var css = document.createElement('css')
-		css.href = '../../components/loader/loader.css'
-		css.type = "text/css"
-		css.rel = "stylesheet"
-		 
-		window.getElementsByTagName('head')[0].appendChild(css)
-
-		// Create and return the fragment
-		return CreateFragment()
 	}
 
 	CreateFragment(){

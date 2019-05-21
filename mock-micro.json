@@ -1,4 +1,5 @@
 {
+	"baud": 9600,
 	"settings": [
 		{
 			"name": "Volume",
