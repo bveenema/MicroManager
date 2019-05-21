@@ -1,0 +1,35 @@
+.component-loader {
+	display: inline-block;
+	height: 32px;
+	position: relative;
+	width: 0;
+}
+
+.component-loader-inner {
+	height: 18px;
+	opacity: 100;
+	position: absolute;
+		right: 50%;
+		top: 50%;
+	transform: translate(-50%, -50%);
+	transition: opacity 1s;
+	width: 18px;
+}
+
+.setting-picker .component-loader-inner {
+	transform: translate(30%, -50%);
+}
+
+#device-content .component-loader-inner {
+	transform: translate(50%, -50%);
+}
+
+.setting-circle-loader, .setting-success-icon {
+	position: absolute;
+	opacity: 100;
+	transition: opacity 0.5s;
+}
+
+.invisible {
+	opacity: 0;
+}

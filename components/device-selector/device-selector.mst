@@ -2,5 +2,5 @@
     <input type="radio" name="devices" class="spectrum-Radio-input" id={{device.comName}}>
     <span class="spectrum-Radio-button"></span>
     <label class="spectrum-Radio-label" for="{{device.comName}}">{{device.comName}} - {{device.manufacturer}}</label>
-    <div class="component-loader"></div>
 </div>
+<div class="component-loader"></div>
