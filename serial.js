@@ -32,6 +32,7 @@ function Open(device){
       OpenPort(device).then(() => {
         resolve()
       }).catch(() => {
+        console.log('Catching OpenPort reject')
         reject()
       })
     }
@@ -43,22 +44,27 @@ function OpenPort(device){
   return new Promise((resolve, reject) => {
     // Open the port
     port = new SerialPort(device.comName, {
-      
+      // no options
     })
 
-    // Attach a newline parser
-    const parser = port.pipe(new Readline({ delimiter: '\r\n' }))
+    // // Attach a newline parser
+    // const parser = port.pipe(new Readline({ delimiter: '\r\n' }))
 
-    // Handle Incoming Data
-    parser.on('data', (data) => {
-      MicroDebugWindow.Update(data)
-    })
+    // // Handle Incoming Data
+    // parser.on('data', (data) => {
+    //   MicroDebugWindow.Update(data)
+    // })
 
     // Handle open
     port.on('open', () => {
-        console.log('Open')
-        resolve()
+      console.log('Open')
+      resolve()
     })
+
+    // port.on('error', () => {
+    //   console.log('Error')
+    //   reject()
+    // })
   })
 }
 
@@ -66,6 +72,8 @@ function OpenPort(device){
 ipcMain.on('serial:open', (e, device) => {
   Open(device).then(() => {
     e.reply('serial:opened', true)
+  }).catch(() => {
+    console.log('Failed to Open')
   })
 })
 

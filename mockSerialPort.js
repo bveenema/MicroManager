@@ -1,4 +1,4 @@
-let Devices = [
+const Devices = [
 	{
 		deviceInfo: { 
 			comName: 'COM1',
@@ -34,9 +34,17 @@ let Devices = [
 	},
 ]
 
-class SerialPort {
-	constructor(){
-		
+const events = require('events')
+class SerialPort extends events.EventEmitter{
+	constructor(comName){
+		super()
+		this.deviceInfo = Devices.find((device) => {
+			return comName === device.deviceInfo.comName
+		})
+		setTimeout(function(){ 
+			console.log('Emitting OPEN event')
+			this.emit('open') 
+		}.bind(this), 5)
 	}
 
 	static list() {
