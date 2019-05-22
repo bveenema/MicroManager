@@ -12,6 +12,7 @@ const mainContentInner = document.querySelector('#main-content-inner')
 const slideMenu = document.querySelector('#slide-menu')
 const toggleSlideMenuButton = slideMenu.querySelector('#toggle-slide-menu')
 const settingsContainer = document.querySelector('#settings')
+const outputsContainer = document.querySelector('#outputs')
 
 // Toggle State Container Listener
 toggleSlideMenuButton.addEventListener('click', () => {
@@ -27,7 +28,7 @@ toggleSlideMenuButton.addEventListener('click', () => {
 	
 })
 
-// Handle settings setup
+// Handle settings load
 ipcRenderer.on('settings:load', function(e, ctrlObj){
 	if(ctrlObj){
 		// clear any settings in the settings div
@@ -40,6 +41,19 @@ ipcRenderer.on('settings:load', function(e, ctrlObj){
 		})
 	}
 })
+
+// Handle state load
+ipcRenderer.on('state:load', function(e, ctrlObj)){
+	if(ctrlObj){
+		// clear any state in the drawer
+		outputsContainer.innerHTML = ''
+
+		// translate the ctrlObj
+		ctrlObj.state.forEach((s) => {
+			
+		})
+	}
+}
 
 // Handle Theme Change
 ipcRenderer.on('theme:change', function(e, theme){

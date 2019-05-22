@@ -4,7 +4,7 @@
 		{
 			"name": "Volume",
 			"type": "slider",
-			"command": 4,
+			"command": 1,
 			"min": 20,
 			"max": 30,
 			"default": 20,
@@ -14,7 +14,7 @@
 		{
 			"name": "Volume",
 			"type": "slider",
-			"command": 4,
+			"command": 2,
 			"min": 0,
 			"max": 10,
 			"default": 1,
@@ -25,7 +25,7 @@
 		{
 			"name": "Motor Seed",
 			"type": "input",
-			"command": 0,
+			"command": 3,
 			"min": 0,
 			"max": 10,
 			"default": 1,
@@ -35,7 +35,7 @@
 		{
 			"name": "Target Pressure",
 			"type": "input",
-			"command": 1,
+			"command": 4,
 			"min": 10,
 			"max": 500,
 			"default": 11,
@@ -45,7 +45,7 @@
 		{
 			"name": "Direction",
 			"type": "picker",
-			"command": 2,
+			"command": 5,
 			"default": "Left",
 			"options": [
 				"Left",
@@ -57,7 +57,7 @@
 		{
 			"name": "Direction",
 			"type": "picker",
-			"command": 3,
+			"command": 6,
 			"default": "Left",
 			"options": [
 				"Left",
@@ -66,5 +66,14 @@
 				"Down"
 			]
 		}
-	] 
+	],
+	"state": [
+		{
+			"name": "Pressure",
+			"type": "output",
+			"command": 7,
+			"min": 0,
+			"max": 25
+		}
+	]
 }

@@ -1,0 +1,5 @@
+<li>
+	<span class="bold">{{title}}</span>
+	<span class="spectrum-Label spectrum-Label--blue invisible">{{value}}</span>
+	<div class="component-loader">
+</li>

@@ -52,4 +52,8 @@ module.exports = {
 	LoadSettings: function(ctrlObj){
 		mainWindow.webContents.send('settings:load', ctrlObj)
 	},
+
+	LoadState: function(ctrlObj){
+		mainWindow.webContents.send('state:load', crtlObj)
+	}
 }
