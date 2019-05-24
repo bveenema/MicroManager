@@ -10,8 +10,7 @@ const MicroDebugWindow = require('./windows/micro-debug/micro-debug')
 const MainWindow = require('./windows/main/main')
 
 let port = null
-let ready = false
-let configured = false
+let WriteBuffer = []
 
 // Open
 // Attempts to open the specified port. Returns resolve if successful
@@ -54,7 +53,8 @@ function HandleConfig(configObj) {
     })
   }
   if(configObj.settings){
-    MainWindow.LoadSettings(configObj)
+    MainWindow.LoadSettings(configObj.settings)
+    MainWindow.LoadState(configObj.state)
   }
 }
 
@@ -70,21 +70,27 @@ function OpenPort(device){
 
     // Handle Incoming Data
     parser.on('data', (data) => {
+      // split the data string at the first colon, into keyword and value
+      let [keyWord, value] = data.split(/:(.+)/)
+      console.log('keyword:', keyWord)
+      console.log('value:', value)
       // Handle 'READY' keyword
-      if(data === 'READY'){
-        ready = true
+      if(keyWord === 'READY'){
         port.write('CONFIG')
       
       // Handle 'CONFIG' return
-      }else if(configured === false && ready === true){
-        let config = JSON.parse(data)
+      }else if(keyWord === 'CONFIG'){
+        let config = JSON.parse(value)
         HandleConfig(config)
-        configured = true
         resolve()
+      
+      // Handle debug messages
+      }else if(keyWord == 0){
+        MicroDebugWindow.Update(value)
       }
 
-      else
-        MicroDebugWindow.Update(data)
+      // Handle command messages
+      MainWindow.Update(parseInt(keyWord), value)
     })
 
     // Handle open
@@ -107,6 +113,11 @@ ipcMain.on('serial:open', (e, device) => {
   }).catch(() => {
     console.log('Failed to Open')
   })
+})
+
+// Handle Write
+ipcMain.on('serial:write', (e, command, value) => {
+  WriteBuffer.
 })
 
 

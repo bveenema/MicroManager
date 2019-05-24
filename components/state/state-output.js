@@ -10,9 +10,9 @@ const Loader = require('../loader/loader')
 let OutputID = 0
 
 class Output {
-	constructor(output) {
+	constructor(settings) {
 		this.OutputID = 'output-' + OutputID++
-		this.output = output
+		this.settings = settings
 		this.loaders
 		this.node
 	}
@@ -26,7 +26,10 @@ class Output {
 		let o = new Output(output)
 
 		// Attach HTML fragments
-		let fragment = o.Render(output)
+		let fragment = o.Render({
+			output: output,
+			outputID: OutputID
+		})
 
 		o.node = document.createElement('div')
 		o.node.appendChild(fragment)
@@ -36,7 +39,7 @@ class Output {
 		o.AttachListener(fragment)
 
 		// Append CSS file to the document
-		ImportCSS(__dirname, 'output.css')
+		ImportCSS(__dirname, 'state-output.css')
 
 		return o
 	}
@@ -47,20 +50,43 @@ class Output {
 
 	Render(data){
 		// load the template
-		let contents = fs.readFileSync(__dirname + '/output.mst', 'utf8').toString()
+		let contents = fs.readFileSync(__dirname + '/state-output.mst', 'utf8').toString()
 
 		// Update the template
-		let rendered = Mustache.render(contents, {
-			data: data
-		})
+		let rendered = Mustache.render(contents, data)
 
 		// convert the rendered template to a document fragment
 		let fragment = document.createRange().createContextualFragment(rendered)
 
 		// Search and create Loaders
 		this.loaders = Loader.CreateLoaders(fragment)
+		this.loaders[0].SetState('loading')
 		
 		return fragment
+	}
+
+	Update(value) {
+		let valContainer = this.node.querySelector('spectrum-Label')
+		valContainer.innerText = value
+		if(value > this.settings.max || value < this.settings.min)
+			this.SetColor('red')
+		else
+			this.SetColor('blue')
+	}
+
+	SetColor(color) {
+		let el = this.node.querySelector('spectrum-Label')
+		if(color === 'red'){
+			el.classList.remove('spectrum-Label--green', 'spectrum-Label--blue')
+			el.classList.add('spectrum-Label--red')
+		}else if(color === 'green'){
+			el.classList.remove('spectrum-Label--red', 'spectrum-Label--blue')
+			el.classList.add('spectrum-Label--green')
+		}else if(color === 'blue'){
+			el.classList.remove('spectrum-Label--red', 'spectrum-Label--green')
+			el.classList.add('spectrum-Label--blue')
+		}
+
 	}
 }
 

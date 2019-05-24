@@ -3,7 +3,8 @@ const electron = require('electron')
 const {ipcRenderer} = electron
 
 // Local Imports
-const Settings = require('../../components/setting/setting-handler.js')
+const Settings = require('../../components/setting/setting-handler')
+const State = require('../../components/state/state-handler')
 
 // DOM elements
 const body = document.querySelector('body')
@@ -12,7 +13,7 @@ const mainContentInner = document.querySelector('#main-content-inner')
 const slideMenu = document.querySelector('#slide-menu')
 const toggleSlideMenuButton = slideMenu.querySelector('#toggle-slide-menu')
 const settingsContainer = document.querySelector('#settings')
-const outputsContainer = document.querySelector('#outputs')
+const outputsContainer = document.querySelector('#outputs ul')
 
 // Toggle State Container Listener
 toggleSlideMenuButton.addEventListener('click', () => {
@@ -29,31 +30,30 @@ toggleSlideMenuButton.addEventListener('click', () => {
 })
 
 // Handle settings load
-ipcRenderer.on('settings:load', function(e, ctrlObj){
-	if(ctrlObj){
+ipcRenderer.on('settings:build', (e, settings) => {
+	if(settings){
 		// clear any settings in the settings div
 		settingsContainer.innerHTML = ''
 
-		// translate the ctrlObj object
-		console.log('Received ctrlObj', ctrlObj)
-		ctrlObj.settings.forEach((s) =>{
+		// Build Settings
+		settings.forEach((s) =>{
 			Settings.CreateSetting(s)
 		})
 	}
 })
 
 // Handle state load
-ipcRenderer.on('state:load', function(e, ctrlObj)){
-	if(ctrlObj){
+ipcRenderer.on('state:build', (e, state) => {
+	if(state){
 		// clear any state in the drawer
 		outputsContainer.innerHTML = ''
 
-		// translate the ctrlObj
-		ctrlObj.state.forEach((s) => {
-			
+		// Build the state
+		state.forEach((s) => {
+			State.CreateState(s)
 		})
 	}
-}
+})
 
 // Handle Theme Change
 ipcRenderer.on('theme:change', function(e, theme){

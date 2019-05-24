@@ -49,11 +49,11 @@ module.exports = {
 		}
 	},
 	
-	LoadSettings: function(ctrlObj){
-		mainWindow.webContents.send('settings:load', ctrlObj)
+	LoadSettings: function(state){
+		mainWindow.webContents.send('settings:build', state)
 	},
 
-	LoadState: function(ctrlObj){
-		mainWindow.webContents.send('state:load', crtlObj)
+	LoadState: function(state){
+		mainWindow.webContents.send('state:build', state)
 	}
 }
