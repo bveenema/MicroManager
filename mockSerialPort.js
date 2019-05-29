@@ -116,10 +116,6 @@ class SerialPort extends events.EventEmitter{
 				returnVal = s.currentValue
 
 				// Invert the increment when out of bounds
-				if(s.currentValue > (s.max + Math.abs(3*s.increment)))
-					console.log('Above Bound')
-				if(s.currentValue < (s.min - Math.abs(3*s.increment)))
-					console.log('Below Bound')
 				if(s.currentValue > (s.max + Math.abs(3*s.increment))
 				|| s.currentValue < (s.min - Math.abs(3*s.increment)))
 					s.increment = -s.increment
