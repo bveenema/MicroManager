@@ -60,28 +60,10 @@ class SettingBase{
 		let loaders = node.querySelectorAll('.component-loader')
 
 		// Create a Loader instance for each div
-		loaders.forEach((l) => {
-			// Create the loader and save it to the class
-			let temp = new Loader(l)
-			this.loaders.push(temp)
-
-			// Add the LoaderID to the parent element
-			l.setAttribute('id', temp.LoaderID)
-
-			// Add the loader to the DOM and set state to idle
-			l.appendChild(temp.CreateFragment())
-			temp.SetState('idle')
-		})
+		this.loaders = Loader.CreateLoaders(node)
 
 		// Create the error message
-		let eMsg = node.querySelector('.error-message')
-		if(eMsg) {
-			this.ErrorMessage = new ErrorMessage(eMsg)
-			eMsg.classList.add('invisible')
-			eMsg.setAttribute('id', this.ErrorMessage.ErrorMessageID)
-			eMsg.appendChild(this.ErrorMessage.CreateFragment())
-			
-		}
+		this.ErrorMessage = ErrorMessage.Create(node)
 
 		return node
 	}

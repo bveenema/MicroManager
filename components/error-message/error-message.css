@@ -1,0 +1,9 @@
+.error-message {
+	bottom: 5px;
+}
+
+.error-message {
+	position: absolute;
+	opacity: 100;
+	transition: opacity 0.5s;
+}

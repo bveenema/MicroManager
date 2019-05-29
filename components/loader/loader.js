@@ -15,7 +15,7 @@ class Loader {
 	}
 
 	// Create Loaders
-	// Serches a node for '.component-loader' divs and returns new instances for each
+	// Searches a node for '.component-loader' divs and returns new instances for each
 	// \param[node/fragment] node - a node or fragment that may contain a '.component-loader' div
 	static CreateLoaders(node) {
 		if(node){

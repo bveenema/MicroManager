@@ -2,12 +2,12 @@
 const fs = require('fs')
 const Mustache = require('mustache')
 
-let ErrorMessageID = 0
+// Local Imports
+const {ImportCSS} = require('../../util/ImportCSS')
 
 class ErrorMessage {
 	constructor(node) {
 		this.node = node
-		this.ErrorMessageID = 'ErrorMessage-' + ErrorMessageID++
 	}
 
 	// Display
@@ -28,6 +28,30 @@ class ErrorMessage {
 	// Hides the error message if shown.
 	Hide(){
 		this.node.classList.add('invisible')
+	}
+
+	// Create Error Message
+	// Searches a node for an '.error-message' div and returns a new instance of ErrorMessage
+	// \param[node/fragment] node - a node or fragment that may contain a '.error-message' div
+	static Create(node){
+		if(node){
+			// find the div containing error-message class
+			let errorDiv = node.querySelector('.error-message')
+			if(errorDiv) {
+				// create new Error message Instance
+				let eMsg = new ErrorMessage(errorDiv)
+
+				// Initialize Error div
+				errorDiv.classList.add('invisible')
+
+				// Attach HTML fragme
+				errorDiv.appendChild(eMsg.CreateFragment())
+
+				// Append CSS file to the document
+				ImportCSS(__dirname, 'error-message.css')
+				
+			}
+		}
 	}
 
 	CreateFragment(){

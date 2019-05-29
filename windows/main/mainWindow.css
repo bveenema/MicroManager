@@ -148,14 +148,10 @@ body {
 	transform: translate(30%, -50%);
 }
 
-.setting-circle-loader, .setting-success-icon, .error-message {
+.setting-circle-loader, .setting-success-icon {
 	position: absolute;
 	opacity: 100;
 	transition: opacity 0.5s;
-}
-
-.error-message {
-	bottom: 5px;
 }
 
 .invisible {
