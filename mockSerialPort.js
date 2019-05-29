@@ -112,7 +112,6 @@ class SerialPort extends events.EventEmitter{
 
 				// Increment the current value
 				s.currentValue += s.increment
-				console.log(s.currentValue, s.increment)
 				returnVal = s.currentValue
 
 				// Invert the increment when out of bounds

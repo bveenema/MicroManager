@@ -56,9 +56,6 @@ class SettingBase{
 		node.setAttribute('id', this.nodeID)
 		node.appendChild(fragment)
 
-		// Search for 'component-loader' divs
-		let loaders = node.querySelectorAll('.component-loader')
-
 		// Create a Loader instance for each div
 		this.loaders = Loader.CreateLoaders(node)
 
