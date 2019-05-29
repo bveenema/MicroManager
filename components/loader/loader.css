@@ -21,7 +21,7 @@
 }
 
 #outputs .component-loader-inner {
-	transform: translate(-50%, -75%);
+	transform: translate(-100%, -75%);
 }
 
 .setting-picker .component-loader-inner {

@@ -55,5 +55,9 @@ module.exports = {
 
 	LoadState: function(state){
 		mainWindow.webContents.send('state:build', state)
+	},
+
+	Update: function(command, value){
+		mainWindow.webContents.send('serial:wrote', command, value)
 	}
 }

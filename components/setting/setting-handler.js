@@ -9,6 +9,8 @@ const SettingSlider = require('./setting-slider')
 let nodeIDCount = 0
 
 module.exports = {
+	Objects: [],
+	
 	CreateSetting: function(setting) {
 
 		// Create a new Instance of the setting
@@ -28,6 +30,9 @@ module.exports = {
 		
 		// Attach a listener
 		temp.AttachListener(node)
+
+		// Add the Object to the array
+		this.Objects.push(temp)
 	
 		// Attach the node to the setting div
 		document.getElementById('settings').appendChild(node)

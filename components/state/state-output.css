@@ -1,0 +1,5 @@
+#outputs .spectrum-Label {
+	text-align: center;
+	min-width: 48px;
+	transition: opacity 0.5s;
+}

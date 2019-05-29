@@ -36,10 +36,15 @@ class Output {
 		container.appendChild(o.node)
 
 		// add the listener
-		o.AttachListener(fragment)
+		o.AttachListener(o.node)
 
 		// Append CSS file to the document
 		ImportCSS(__dirname, 'state-output.css')
+
+		// Create the update interval
+		o.UpdateInterval = setInterval(function(){
+			ipcRenderer.send('serial:write', o.settings.command)
+		}.bind(o), 250)
 
 		return o
 	}
@@ -66,16 +71,29 @@ class Output {
 	}
 
 	Update(value) {
-		let valContainer = this.node.querySelector('spectrum-Label')
-		valContainer.innerText = value
-		if(value > this.settings.max || value < this.settings.min)
-			this.SetColor('red')
-		else
-			this.SetColor('blue')
+		if(value){
+			// Display the value container
+			if(this.loaders[0].state === 'loading'){
+				this.loaders[0].SetState('success')
+				setTimeout(function(){
+					this.node.querySelector('.spectrum-Label').classList.remove('invisible')
+				}.bind(this), 1000)
+			}
+
+			// Update the DOM value
+			let valContainer = this.node.querySelector('.spectrum-Label')
+			valContainer.innerText = value
+
+			// Update the Color
+			if(value > this.settings.max || value < this.settings.min)
+				this.SetColor('red')
+			else
+				this.SetColor('blue')
+		}
 	}
 
 	SetColor(color) {
-		let el = this.node.querySelector('spectrum-Label')
+		let el = this.node.querySelector('.spectrum-Label')
 		if(color === 'red'){
 			el.classList.remove('spectrum-Label--green', 'spectrum-Label--blue')
 			el.classList.add('spectrum-Label--red')
@@ -86,7 +104,6 @@ class Output {
 			el.classList.remove('spectrum-Label--red', 'spectrum-Label--green')
 			el.classList.add('spectrum-Label--blue')
 		}
-
 	}
 }
 

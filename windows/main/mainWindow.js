@@ -55,6 +55,27 @@ ipcRenderer.on('state:build', (e, state) => {
 	}
 })
 
+// Handle serial write reply
+ipcRenderer.on('serial:wrote', (e, command, value) => {
+	// Check State Objects for a match
+	let StateObj = State.Objects.find((o) => {
+		return o.settings.command === command
+	})
+	if(StateObj){
+		StateObj.Update(value)
+	}
+
+	// Only check Setting Objects if no state objects matched
+	else{
+		let SettingObj = Settings.Objects.fine((o) =>{
+			return o.settings.command === command
+		})
+		if(SettingObj){
+			SettingObj.Update(value)
+		}
+	}
+})
+
 // Handle Theme Change
 ipcRenderer.on('theme:change', function(e, theme){
 	if(theme === 'light'){

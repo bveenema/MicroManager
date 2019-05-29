@@ -10,7 +10,64 @@ const MicroDebugWindow = require('./windows/micro-debug/micro-debug')
 const MainWindow = require('./windows/main/main')
 
 let port = null
-let WriteBuffer = []
+const WRITE_INTERVAL = 10 //ms
+let WriteBuffer = {
+  LastCommand: '',
+  Writeable: true,
+  Writes: [],
+  OutstandingCommand: null,
+  OutsandingCallback: null,
+  WriteTimer: null,
+
+  // Write
+  // Attempts to write the next command to the device.
+  // Writes are only allowed every WRITE_INTERVAL after a write is acknowledged by the device
+  Write: function(){
+    // If Writeable, write the object and set not Writeable
+    if(this.Writeable){
+      this.Writeable = false
+      // write to the serial port
+      let wObj = this.Writes.shift()
+      port.write(wObj.command + ':' + wObj.value)
+
+      // Set the outstanding values
+      this.OutstandingCommand = wObj.command
+      this.OutsandingCallback = wObj.callback
+    
+    // Otherwise delay and check again if there are still Writes in the buffer
+    }else if(this.Writes.length > 0 && this.WriteTimer === null){
+      this.WriteTimer = setTimeout(function(){ 
+        this.WriteTimer = null
+        this.Write()
+      }.bind(this), 2)
+    }
+  },
+
+  // Handle Acknowledge
+  Acknowledge: function(returnVal) {
+    // Reset Oustanding Command and call the callback
+    this.OutstandingCommand = null
+    this.OutsandingCallback(returnVal)
+
+    // Delay next write for WRITE_INTERVAL
+    setTimeout(function(){ this.Writeable = true }.bind(this), WRITE_INTERVAL)
+  },
+}
+
+
+// Handle Write
+ipcMain.on('serial:write', (e, command, value) => {
+  // Add to the write buffer
+  WriteBuffer.Writes.push({
+    command: command, 
+    value: value,
+    callback: function(returnVal){
+      e.reply('serial:wrote', command, returnVal)
+    }
+  })
+  WriteBuffer.Write()
+})
+
 
 // Open
 // Attempts to open the specified port. Returns resolve if successful
@@ -72,8 +129,7 @@ function OpenPort(device){
     parser.on('data', (data) => {
       // split the data string at the first colon, into keyword and value
       let [keyWord, value] = data.split(/:(.+)/)
-      console.log('keyword:', keyWord)
-      console.log('value:', value)
+      let command = parseInt(keyWord)
       // Handle 'READY' keyword
       if(keyWord === 'READY'){
         port.write('CONFIG')
@@ -85,12 +141,17 @@ function OpenPort(device){
         resolve()
       
       // Handle debug messages
-      }else if(keyWord == 0){
+      }else if(command === 0){
         MicroDebugWindow.Update(value)
-      }
-
+      
       // Handle command messages
-      MainWindow.Update(parseInt(keyWord), value)
+      }else if(command !== NaN){
+        MainWindow.Update(command, value)
+        // Handle write acknowledges
+        if(command === WriteBuffer.OutstandingCommand)
+          WriteBuffer.Acknowledge(value)
+      }
+      
     })
 
     // Handle open
@@ -114,14 +175,6 @@ ipcMain.on('serial:open', (e, device) => {
     console.log('Failed to Open')
   })
 })
-
-// Handle Write
-ipcMain.on('serial:write', (e, command, value) => {
-  WriteBuffer.
-})
-
-
-
 
 module.exports = {
   GetDevices: function(){

@@ -69,6 +69,10 @@ class SettingBase{
 	AttachListener(){}
 
 	Init(){}
+
+	Update(value){
+		console.log("Update Setting", value)
+	}
 }
 
 module.exports = SettingBase

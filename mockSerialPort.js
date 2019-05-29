@@ -34,7 +34,9 @@ const Devices = [
 	},
 ]
 
+// Module Imports
 const fs = require('fs')
+const _ = require('lodash')
 
 const events = require('events')
 class SerialPort extends events.EventEmitter{
@@ -82,8 +84,48 @@ class SerialPort extends events.EventEmitter{
 			let config = JSON.stringify(this.config)
 			setTimeout(function(){ this.emit('data', 'CONFIG:'+config) }.bind(this), 50)
 		}else{
-			setTimeout(function(){ this.emit('data', data) }.bind(this), 10)
+			setTimeout(function(){ 
+				const [keyWord, value] = data.split(/:(.+)/)
+				if(value !== 'undefined')
+					this.emit('data', data)
+				else{
+					this.emit('data', keyWord + ':' + this.GetState(parseInt(keyWord)))
+				}
+
+								
+			}.bind(this), 10)
 		}
+	}
+
+	// Get the mocked current value of the state
+	GetState(command){
+		let returnVal = null
+		this.config.state.forEach((s) => {
+			if(s.command === command){
+				// initialize the current value
+				if(typeof s.currentValue === 'undefined')
+					s.currentValue = s.min
+
+				// Initialize the increment
+				if(typeof s.increment === 'undefined')
+					s.increment = _.round((s.max - s.min)/25)
+
+				// Increment the current value
+				s.currentValue += s.increment
+				console.log(s.currentValue, s.increment)
+				returnVal = s.currentValue
+
+				// Invert the increment when out of bounds
+				if(s.currentValue > (s.max + Math.abs(3*s.increment)))
+					console.log('Above Bound')
+				if(s.currentValue < (s.min - Math.abs(3*s.increment)))
+					console.log('Below Bound')
+				if(s.currentValue > (s.max + Math.abs(3*s.increment))
+				|| s.currentValue < (s.min - Math.abs(3*s.increment)))
+					s.increment = -s.increment
+			}
+		})
+		return returnVal
 	}
 
 	update(){}

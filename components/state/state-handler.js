@@ -4,12 +4,12 @@ const StateOutput = require('./state-output')
 // DOM Nodes
 const OutputContainer = document.querySelector('#outputs ul')
 
-let State = []
-
 module.exports = {
+	Objects: [],
+
 	CreateState: function(state) {
-		// Create a new Instance of the setting
+		// Create a new Instance of the state variable
 		if(state.type === 'output')
-			State.push(StateOutput.Create(OutputContainer, state))
+			this.Objects.push(StateOutput.Create(OutputContainer, state))
 	}
 }
