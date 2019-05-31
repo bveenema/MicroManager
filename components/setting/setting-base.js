@@ -3,21 +3,64 @@ const fs = require('fs')
 const Mustache = require('mustache')
 
 // Local Imports
+const {ImportCSS} = require('../../util/ImportCSS')
 const Loader = require('../loader/loader.js')
 const ErrorMessage = require('../error-message/error-message.js')
 
 class SettingBase{
-	constructor(settingObj, node_id) {
-		this.name = settingObj.name
-		this.type = settingObj.type
-		this.command = settingObj.command
-		this.nodeID = node_id
-		this.loaders = []
-		this.minValue = settingObj.min
-		this.maxValue = settingObj.max
-		this.currentValue = settingObj.default
-		this.isFloat = settingObj.float
-		this.floatPrecision = settingObj.floatPrecision
+	constructor(settings) {
+		this.settings = settings
+		this.loaders
+		this.node
+	}
+
+	// Create
+	// Runs all the functions necessary to create, initialize and load the setting into the DOM
+	// \param[node/fragment] container - the DOM element the setting is contained in
+	// \param[obj] settings - the settings object from the micro for this setting
+	// \param[string] mustachFile - the file name of the mustache template (no path & must be same folder)
+	// \param[string] cssFile = the file name of the CSS file (no path & must be same folder)
+	static Create(container, settings, mustacheFile, cssFile) {
+		// Create a new SettingSlider Instance
+		let s = new this(settings)
+
+		// Attach HTML fragments
+		let fragment = s.Render(mustacheFile)
+		s.node = document.createElement('div')
+		s.node.classList.add('setting')
+		s.node.appendChild(fragment)
+		container.appendChild(s.node)
+
+		// Initialize
+		s.Init()
+
+		// Add Listeners
+		s.AttachListener()
+
+		// Append CSS file to the document
+		ImportCSS(__dirname, cssFile)
+
+		return s
+	}
+
+	Render(mustacheFile){
+		// load the template
+		let contents = fs.readFileSync(__dirname + '/' + mustacheFile, 'utf8').toString()
+
+		// Update the template
+		console.log(this.settings)
+		let rendered = Mustache.render(contents, this.settings)
+
+		// convert the rendered template to a document fragment
+		let fragment = document.createRange().createContextualFragment(rendered)
+
+		// Search and create Loaders
+		this.loaders = Loader.CreateLoaders(fragment)
+
+		// Create the error message
+		this.ErrorMessage = ErrorMessage.Create(fragment)
+		
+		return fragment
 	}
 
 	CreateDOMNode(template, attributes) {
@@ -25,43 +68,23 @@ class SettingBase{
 		let contents = fs.readFileSync(__dirname + '\\' + template, 'utf8').toString()
 
 		// Update the template
+		console.log(attributes)
 		let rendered =  Mustache.render(contents, attributes)
 
 		// convert the rendered template to a document fragment
 		let fragment = document.createRange().createContextualFragment(rendered)
 
-		// create an empty setting nod and append the fragment
+		// create an empty setting node and append the fragment
 		let node = document.createElement('div')
 		node.classList.add('setting')
 		node.setAttribute('id', this.nodeID)
 		node.appendChild(fragment)
 
-		// Search for 'component-loader' divs
-		let loaders = node.querySelectorAll('.component-loader')
-
 		// Create a Loader instance for each div
-		loaders.forEach((l) => {
-			// Create the loader and save it to the class
-			let temp = new Loader(l)
-			this.loaders.push(temp)
-
-			// Add the LoaderID to the parent element
-			l.setAttribute('id', temp.LoaderID)
-
-			// Add the loader to the DOM and set state to idle
-			l.appendChild(temp.CreateFragment())
-			temp.SetState('idle')
-		})
+		this.loaders = Loader.CreateLoaders(node)
 
 		// Create the error message
-		let eMsg = node.querySelector('.error-message')
-		if(eMsg) {
-			this.ErrorMessage = new ErrorMessage(eMsg)
-			eMsg.classList.add('invisible')
-			eMsg.setAttribute('id', this.ErrorMessage.ErrorMessageID)
-			eMsg.appendChild(this.ErrorMessage.CreateFragment())
-			
-		}
+		this.ErrorMessage = ErrorMessage.Create(node)
 
 		return node
 	}

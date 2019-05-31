@@ -1,24 +1,9 @@
 // Local Imports
 const SettingBase = require('./setting-base.js')
-const Loader = require('../loader/loader.js')
 
 class SettingInput extends SettingBase {
-	constructor(settingObj, node_id) {
-		super(settingObj, node_id)
-		this.min = settingObj.min
-		this.max = settingObj.max
-		this.unit = settingObj.unit
-		this.loaders[0]
-	}
-
-	CreateDOMNode() {
-		this.node = super.CreateDOMNode('setting-input.mst', {
-			id: this.command,
-			title: this.name,
-			unit: this.unit,
-			currentValue: this.currentValue,
-		})
-		return this.node
+	constructor(settingObj) {
+		super(settingObj)
 	}
 
 	AttachListener(){
@@ -31,7 +16,7 @@ class SettingInput extends SettingBase {
 	}
 
 	ValidateInput(value){
-		if(value && (value >= this.min && value <= this.max)) return true
+		if(value && (value >= this.settings.min && value <= this.settings.max)) return true
 		return false
 	}
 

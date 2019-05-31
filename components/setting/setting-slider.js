@@ -1,25 +1,14 @@
 // Local Imports
+const {ImportCSS} = require('../../util/ImportCSS')
 const SettingBase = require('./setting-base.js')
-const Loader = require('../loader/loader.js')
 
 class SettingSlider extends SettingBase {
-	constructor(settingObj, node_id) {
-		super(settingObj, node_id)
-		this.options = settingObj.options
-		this.pickerState = 'closed'
+	constructor(settingObj) {
+		super(settingObj)
 		this.disabled = false
 		this.OnMouseDownBind = this.OnMouseDown.bind(this)
 		this.OnMouseUpBind = this.OnMouseUp.bind(this)
 		this.OnMouseMoveBind = this.OnMouseMove.bind(this)
-	}
-
-	CreateDOMNode() {
-		this.node = super.CreateDOMNode('setting-slider.mst', {
-			title: this.name,
-			currentValue: this.currentValue,
-			nodeID: this.nodeID,
-		})
-		return this.node
 	}
 
 	// Init

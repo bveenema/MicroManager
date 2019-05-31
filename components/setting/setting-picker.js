@@ -1,38 +1,20 @@
-// Module Imports
-const fs = require('fs')
-const Mustache = require('mustache')
-
 // Local Imports
 const SettingBase = require('./setting-base.js')
-const Loader = require('../loader/loader.js')
 
 class SettingPicker extends SettingBase {
-	constructor(settingObj, node_id) {
-		super(settingObj, node_id)
+	constructor(settingObj) {
+		super(settingObj)
 		this.options = settingObj.options
 		this.pickerState = 'closed'
 		this.currentValue = settingObj.default
 		this.loaders = []
 	}
 
-	CreateDOMNode() {
-		return super.CreateDOMNode('setting-picker.mst', {
-			title: this.name,
-			options: this.options.map((o) => {
-				let obj = {value: o}
-				if(o === this.currentValue) obj.isSelected = true
-				return obj
-			}),
-			currentValue: this.currentValue,
-			nodeID: this.nodeID,
-		})
-	}
-
-	AttachListener(node){
-		node.querySelector('button').addEventListener('click', (e) => {
+	AttachListener(){
+		this.node.querySelector('button').addEventListener('click', (e) => {
 			this.TogglePicker()
 		})
-		node.querySelectorAll('li').forEach((el, i) => {
+		this.node.querySelectorAll('li').forEach((el, i) => {
 			el.addEventListener('click', (e) => {
 				this.UpdateSetting(e.target)
 			})
@@ -44,10 +26,9 @@ class SettingPicker extends SettingBase {
 	}
 
 	TogglePicker(){
-		let node = document.getElementById(this.nodeID)
-		node.querySelector('.spectrum-Dropdown').classList.toggle('is-open')
-		node.querySelector('.spectrum-Dropdown-trigger').classList.toggle('is-selected')
-		node.querySelector('.spectrum-Dropdown-popover').classList.toggle('is-open')
+		this.node.querySelector('.spectrum-Dropdown').classList.toggle('is-open')
+		this.node.querySelector('.spectrum-Dropdown-trigger').classList.toggle('is-selected')
+		this.node.querySelector('.spectrum-Dropdown-popover').classList.toggle('is-open')
 		this.pickerState = (this.pickerState === 'closed') ? 'open' : 'closed'
 	}
 

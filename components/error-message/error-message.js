@@ -49,7 +49,8 @@ class ErrorMessage {
 
 				// Append CSS file to the document
 				ImportCSS(__dirname, 'error-message.css')
-				
+
+				return eMsg
 			}
 		}
 	}

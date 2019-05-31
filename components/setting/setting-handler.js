@@ -6,35 +6,21 @@ const SettingInput = require('./setting-input')
 const SettingPicker = require('./setting-picker')
 const SettingSlider = require('./setting-slider')
 
+// DOM Elements
+const settingsContainer = document.querySelector('#settings')
+
 let nodeIDCount = 0
 
 module.exports = {
 	Objects: [],
 	
 	CreateSetting: function(setting) {
-
 		// Create a new Instance of the setting
-		let temp
 		if(setting.type === 'input')
-			temp = new SettingInput(setting, nodeIDCount++)
+			this.Objects.push(SettingInput.Create(settingsContainer, setting, 'setting-input.mst', 'setting-input.css'))
 		else if(setting.type === 'picker')
-			temp = new SettingPicker(setting, nodeIDCount++)
+			this.Objects.push(SettingPicker.Create(settingsContainer, setting, 'setting-picker.mst', 'setting-picker.css'))
 		else if(setting.type === 'slider')
-			temp = new SettingSlider(setting, nodeIDCount++)
-
-		// Create a DOM Node
-		let node = temp.CreateDOMNode()
-
-		// Initialize the Setting
-		temp.Init(node)
-		
-		// Attach a listener
-		temp.AttachListener(node)
-
-		// Add the Object to the array
-		this.Objects.push(temp)
-	
-		// Attach the node to the setting div
-		document.getElementById('settings').appendChild(node)
+			this.Objects.push(SettingSlider.Create(settingsContainer, setting, 'setting-slider.mst', 'setting-slider.css'))
 	}
 }
