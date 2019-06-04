@@ -92,18 +92,6 @@ body {
 	max-width: 300px;
 }
 
-#outputs ul {
-	display: inline-block;
-	text-align: left;
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-#outputs ul li:not(:first-child) {
-	margin-top: 0.5em;
-}
-
 .bold {
 	font-weight: bold;
 	margin-right: 0.5em;

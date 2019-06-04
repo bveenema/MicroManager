@@ -2,7 +2,7 @@
 	<label for="setting-picker" class="spectrum-FieldLabel">{{name}}</label>
 	<div class="spectrum-Dropdown">
 		<button class="spectrum-FieldButton spectrum-Dropdown-trigger" aria-haspopup="true">
-			<span class="spectrum-Dropdown-label">{{default}}</span>
+			<span class="spectrum-Dropdown-label">{{current}}</span>
 			<svg class="spectrum-Icon spectrum-UIIcon-ChevronDownMedium spectrum-Dropdown-icon" focusable="false" aria-hidden="true">
 				<use xlink:href="#spectrum-css-icon-ChevronDownMedium" />
 			</svg>

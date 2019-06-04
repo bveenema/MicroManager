@@ -31,7 +31,7 @@ module.exports = {
 					css.href = filePath
 					css.type = "text/css"
 					css.rel = "stylesheet"
-					css.id = 'loader.css'
+					css.id = file
 
 				// append css node
 				document.getElementsByTagName('head')[0].appendChild(css)

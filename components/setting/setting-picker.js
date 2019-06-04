@@ -1,3 +1,6 @@
+// Module Imports
+const {ipcRenderer} = require('electron')
+
 // Local Imports
 const SettingBase = require('./setting-base.js')
 
@@ -7,7 +10,6 @@ class SettingPicker extends SettingBase {
 		this.options = settingObj.options
 		this.pickerState = 'closed'
 		this.currentValue = settingObj.default
-		this.loaders = []
 	}
 
 	AttachListener(){
@@ -16,11 +18,11 @@ class SettingPicker extends SettingBase {
 		})
 		this.node.querySelectorAll('li').forEach((el, i) => {
 			el.addEventListener('click', (e) => {
-				this.UpdateSetting(e.target)
+				this.SendSetting(e.target)
 			})
 			el.addEventListener('keypress', (e) => {
 				if(e.key === "Enter")
-					this.UpdateSetting(e.target)
+					this.SendSetting(e.target)
 			})
 		})
 	}
@@ -32,7 +34,10 @@ class SettingPicker extends SettingBase {
 		this.pickerState = (this.pickerState === 'closed') ? 'open' : 'closed'
 	}
 
-	UpdateSetting(node){
+	// Send Setting
+	// Validates and sends the new setting to the micro
+	// \param[node] node - the DOM node that was clicked on
+	SendSetting(node){
 		// Walk up the DOM to the li element
 		while(node.localName !== 'li')
 			node = node.parentElement
@@ -43,7 +48,8 @@ class SettingPicker extends SettingBase {
 		if(value === this.currentValue) return
 
 		// TODO send  value to micro
-		setTimeout(function(){ this.SetCurrentValue(value) }.bind(this), 1000)
+		// setTimeout(function(){ this.Update(value) }.bind(this), 1000)
+		ipcRenderer.send('serial:write', this.settings.command, value)
 		
 		// Display the loading icon
 		let loaderNode = node.querySelector('.component-loader')
@@ -53,15 +59,17 @@ class SettingPicker extends SettingBase {
 		})
 	}
 
-	SetCurrentValue(value){
+	// Update
+	// Update the current value, called when the micro responds to a new setting or sends
+	// a new setting on its own
+	// \param[number/string] value: the new value to update the setting with
+	Update(value){
 
 		this.currentValue = value
 
-		let node = document.getElementById(this.nodeID)
-
 		// Find the li with the corresponding value
 		let li
-		let elements = node.querySelectorAll('li')
+		let elements = this.node.querySelectorAll('li')
 		elements.forEach((el) => {
 			if(el.id.includes(value)) li = el
 		})
@@ -80,7 +88,7 @@ class SettingPicker extends SettingBase {
 				el.classList.remove('is-selected')
 			})
 			li.classList.add('is-selected')
-			node.querySelector('.spectrum-Dropdown-label').innerText = value
+			this.node.querySelector('.spectrum-Dropdown-label').innerText = value
 		}.bind(this), 1000)
 	}
 }

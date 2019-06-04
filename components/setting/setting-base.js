@@ -48,7 +48,6 @@ class SettingBase{
 		let contents = fs.readFileSync(__dirname + '/' + mustacheFile, 'utf8').toString()
 
 		// Update the template
-		console.log(this.settings)
 		let rendered = Mustache.render(contents, this.settings)
 
 		// convert the rendered template to a document fragment
@@ -62,33 +61,7 @@ class SettingBase{
 		
 		return fragment
 	}
-
-	CreateDOMNode(template, attributes) {
-		// load the template
-		let contents = fs.readFileSync(__dirname + '\\' + template, 'utf8').toString()
-
-		// Update the template
-		console.log(attributes)
-		let rendered =  Mustache.render(contents, attributes)
-
-		// convert the rendered template to a document fragment
-		let fragment = document.createRange().createContextualFragment(rendered)
-
-		// create an empty setting node and append the fragment
-		let node = document.createElement('div')
-		node.classList.add('setting')
-		node.setAttribute('id', this.nodeID)
-		node.appendChild(fragment)
-
-		// Create a Loader instance for each div
-		this.loaders = Loader.CreateLoaders(node)
-
-		// Create the error message
-		this.ErrorMessage = ErrorMessage.Create(node)
-
-		return node
-	}
-
+	
 	AttachListener(){}
 
 	Init(){}

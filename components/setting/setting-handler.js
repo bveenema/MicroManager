@@ -1,6 +1,3 @@
-const electron = require('electron')
-const {ipcRenderer} = electron
-
 // Local Imports
 const SettingInput = require('./setting-input')
 const SettingPicker = require('./setting-picker')

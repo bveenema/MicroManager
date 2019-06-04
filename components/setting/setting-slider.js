@@ -1,5 +1,7 @@
+// Module Imports
+const {ipcRenderer} = require('electron')
+
 // Local Imports
-const {ImportCSS} = require('../../util/ImportCSS')
 const SettingBase = require('./setting-base.js')
 
 class SettingSlider extends SettingBase {
@@ -21,7 +23,9 @@ class SettingSlider extends SettingBase {
 		this.valueOut = this.node.querySelector('.spectrum-Slider-value')
 		this.loaderNode = this.node.querySelector('.component-loader')
 		
-		let position = this.ValueToPosition(this.currentValue)
+		
+		let position = this.ValueToPosition(this.settings.current)
+		this.valueOut.innerText = this.settings.current.toFixed(this.settings.floatPrecision)
 		this.MoveSlider(position)
 	}
 
@@ -90,15 +94,18 @@ class SettingSlider extends SettingBase {
 		window.removeEventListener('mousemove', this.OnMouseMoveBind)
 
 		let position = this.CalculatePosition(e)
-		this.UpdateSetting(position)
+		this.SendSetting(position)
 	}
 
+	// Position to Value
+	// Calculates the actual setting value given the slider position
+	// \param[number] position - the position (0-100) of the slider
 	PositionToValue(position){
-		if(typeof this.minValue !== 'undefined' 
-		&& typeof this.maxValue !== 'undefined'){
-			let value = position/100*(this.maxValue - this.minValue) + this.minValue
-			if(this.isFloat){
-				value = value.toFixed(this.floatPrecision)
+		if(typeof this.settings.min !== 'undefined' 
+		&& typeof this.settings.max !== 'undefined'){
+			let value = position/100*(this.settings.max - this.settings.min) + this.settings.min
+			if(this.settings.float){
+				value = value.toFixed(this.settings.floatPrecision)
 			} else {
 				value = value.toFixed(0)
 			}
@@ -107,24 +114,27 @@ class SettingSlider extends SettingBase {
 		return position
 	}
 
+	// Value to Position
+	// Calculates the slider postion (0-100) given the value
+	// \param[number] value - the actual value of the setting
 	ValueToPosition(value){
-		if(typeof this.minValue !== 'undefined' 
-		&& typeof this.maxValue !== 'undefined'){
-			return ((value-this.minValue)/(this.maxValue - this.minValue))*100
+		if(typeof this.settings.min !== 'undefined' 
+		&& typeof this.settings.max !== 'undefined'){
+			return ((value-this.settings.min)/(this.settings.max - this.settings.min))*100
 		}
+		return 0
 	}
 
-	UpdateSetting(position){
+	// Send Setting
+	// Convert the position to actual value and send to the micro
+	// \param[number] position - the position of the slider (0-100)
+	SendSetting(position){
 		// Convert Position to value
 		this.currentValue = this.PositionToValue(position)
 		this.valueOut.innerText = this.currentValue
 
-		// TODO Validate value
-		// if(value < this.minValue || value > this.maxValue)
-			
-
 		// TODO send value to micro
-		setTimeout(function(){ this.SetCurrentValue(this.currentValue) }.bind(this), 1000)
+		ipcRenderer.send('serial:write', this.settings.command, this.currentValue)
 		
 		// Disable the Slider
 		this.node.querySelector('.spectrum-Slider').classList.add('is-disabled')
@@ -137,7 +147,7 @@ class SettingSlider extends SettingBase {
 		this.loaders[0].SetState('loading')
 	}
 
-	SetCurrentValue(value){
+	Update(value){
 		// check if currentValue is equal to incoming value
 		//	value would not be equal if update unsuccessful or has changed indepenent of app
 		if(this.currentValue !== value){

@@ -67,7 +67,7 @@ ipcRenderer.on('serial:wrote', (e, command, value) => {
 
 	// Only check Setting Objects if no state objects matched
 	else{
-		let SettingObj = Settings.Objects.fine((o) =>{
+		let SettingObj = Settings.Objects.find((o) =>{
 			return o.settings.command === command
 		})
 		if(SettingObj){

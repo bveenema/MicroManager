@@ -29,10 +29,11 @@ class Loader {
 					loaders.push(new Loader(loader))
 				})
 
-				// Attach HTML fragments
+				// Attach HTML fragments and add Loader ID
 				loaders.forEach((Loader, i) => {
 					let fragment = Loader.CreateFragment()
 					loaderDivs[i].appendChild(fragment)
+					loaderDivs[i].setAttribute('id', Loader.LoaderID)
 					Loader.SetState('idle')
 				})
 

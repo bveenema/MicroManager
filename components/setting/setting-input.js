@@ -1,3 +1,6 @@
+// Module Imports
+const {ipcRenderer} = require('electron')
+
 // Local Imports
 const SettingBase = require('./setting-base.js')
 
@@ -8,7 +11,7 @@ class SettingInput extends SettingBase {
 
 	AttachListener(){
 		this.node.addEventListener('keypress', (e) => {
-			if(e.key === 'Enter') this.UpdateSetting(e.target.value)
+			if(e.key === 'Enter') this.SendSetting(e.target.value)
 		})
 		this.node.addEventListener('keyup', (e) => {
 			if(e.key === 'Escape') this.ResetInput()
@@ -20,7 +23,7 @@ class SettingInput extends SettingBase {
 		return false
 	}
 
-	UpdateSetting(value){
+	SendSetting(value){
 		if(value){
 			// Validate value
 			if(this.ValidateInput(value)){
@@ -33,7 +36,7 @@ class SettingInput extends SettingBase {
 				this.currentValue = value
 
 				// TODO send value to micro
-				setTimeout(function(){ this.SetCurrentValue(this.currentValue) }.bind(this), 1000) // Mock a return from micro
+				ipcRenderer.send('serial:write', this.settings.command, value)
 
 				// Display the loader
 				this.loaders[0].SetState('loading')
@@ -44,7 +47,7 @@ class SettingInput extends SettingBase {
 		
 	}
 
-	SetCurrentValue(value){
+	Update(value){
 		// check if currentValue is equal to incoming value
 		//	value would not be equal if update unsuccessful or has changed indepenent of app
 		if(this.currentValue !== value){
