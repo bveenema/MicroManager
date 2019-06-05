@@ -1,5 +1,5 @@
-<li id="{{outputID}}">
-	<span class="bold">{{output.name}}</span>
-	<span class="spectrum-Label spectrum-Label--blue invisible">{{output.min}}</span>
+<li>
+	<span class="bold">{{name}}</span>
+	<span class="spectrum-Label spectrum-Label--blue invisible">{{min}}</span>
 	<div class="component-loader">
 </li>

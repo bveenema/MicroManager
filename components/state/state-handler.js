@@ -9,7 +9,12 @@ module.exports = {
 
 	CreateState: function(state) {
 		// Create a new Instance of the state variable
-		if(state.type === 'output')
-			this.Objects.push(StateOutput.Create(OutputContainer, state))
+		if(state.type === 'output'){
+			this.Objects.push(StateOutput.Create(OutputContainer, state, 'state-output.mst', 'state-output.css'))
+			// show the outputs section
+			if(OutputContainer.parentNode.hasAttribute('hidden'))
+				OutputContainer.parentNode.removeAttribute('hidden')
+		}
+			
 	}
 }

@@ -76,6 +76,20 @@
 			"min": 50,
 			"max": 90,
 			"updateRate": 3000
+		},
+		{
+			"name": "Run Cycle",
+			"type": "button",
+			"command": 9,
+			"buttonType": "primary",
+			"updateRate": 5000
+		},
+		{
+			"name": "Reset",
+			"type": "button",
+			"command": 10,
+			"buttonType": "warning",
+			"updateRate": 5000
 		}
 	]
 }

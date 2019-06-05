@@ -1,0 +1,3 @@
+<button class="spectrum-Button spectrum-Button--primary">
+	<span class="spectrum-Button-label">{{name}}</span>
+</button>

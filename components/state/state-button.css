@@ -1,0 +1,9 @@
+#slide-menu button span {
+	line-height: 1em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#slide-menu .spectrum-ButtonGroup {
+	max-width: 90%;
+}

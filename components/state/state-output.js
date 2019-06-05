@@ -1,73 +1,9 @@
-// Module Imports
-const fs = require('fs')
-const Mustache = require('mustache')
-const {ipcRenderer} = require('electron')
-
 // Local Imports
-const {ImportCSS} = require('../../util/ImportCSS')
-const Loader = require('../loader/loader')
+const StateBase = require('./state-base')
 
-let OutputID = 0
-
-class Output {
+class Output extends StateBase {
 	constructor(settings) {
-		this.OutputID = 'output-' + OutputID++
-		this.settings = settings
-		this.loaders
-		this.node
-	}
-
-	// Create
-	// Creates a new Output instance, and initializes it
-	// \param[node/fragment] container - the container the Ouput will live in
-	// \param[obj] output - the output object from the micro
-	static Create(container, output) {
-		// Create a new Output Instance
-		let o = new Output(output)
-
-		// Attach HTML fragments
-		let fragment = o.Render({
-			output: output,
-			outputID: OutputID
-		})
-
-		o.node = document.createElement('div')
-		o.node.appendChild(fragment)
-		container.appendChild(o.node)
-
-		// add the listener
-		o.AttachListener(o.node)
-
-		// Append CSS file to the document
-		ImportCSS(__dirname, 'state-output.css')
-
-		// Create the update interval
-		o.UpdateInterval = setInterval(function(){
-			ipcRenderer.send('serial:write', o.settings.command)
-		}.bind(o), 250)
-
-		return o
-	}
-
-	AttachListener(node){
-
-	}
-
-	Render(data){
-		// load the template
-		let contents = fs.readFileSync(__dirname + '/state-output.mst', 'utf8').toString()
-
-		// Update the template
-		let rendered = Mustache.render(contents, data)
-
-		// convert the rendered template to a document fragment
-		let fragment = document.createRange().createContextualFragment(rendered)
-
-		// Search and create Loaders
-		this.loaders = Loader.CreateLoaders(fragment)
-		this.loaders[0].SetState('loading')
-		
-		return fragment
+		super(settings)
 	}
 
 	Update(value) {
