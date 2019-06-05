@@ -38,6 +38,16 @@
 	transition: opacity 0.5s;
 }
 
+.spectrum-Slider .component-loader {
+	position: absolute;
+}
+
+.spectrum-Slider .component-loader-inner {
+	height: 16px;
+	width: 16px;
+	transform: translate(50%, -50%)
+}
+
 .invisible {
 	opacity: 0;
 }
