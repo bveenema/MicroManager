@@ -33,9 +33,10 @@ let WriteBuffer = {
       // Set the outstanding values
       this.OutstandingCommand = wObj.command
       this.OutsandingCallback = wObj.callback
-    
-    // Otherwise delay and check again if there are still Writes in the buffer
-    }else if(this.Writes.length > 0 && this.WriteTimer === null){
+    }
+
+    // Call again if there are still Writes in the buffer
+    if(this.Writes.length > 0 && this.WriteTimer === null){
       this.WriteTimer = setTimeout(function(){ 
         this.WriteTimer = null
         this.Write()
@@ -146,10 +147,11 @@ function OpenPort(device){
       
       // Handle command messages
       }else if(command !== NaN){
-        MainWindow.Update(command, value)
         // Handle write acknowledges
         if(command === WriteBuffer.OutstandingCommand)
           WriteBuffer.Acknowledge(value)
+        else
+          MainWindow.Update(command, value)
       }
       
     })

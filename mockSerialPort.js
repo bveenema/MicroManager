@@ -86,38 +86,49 @@ class SerialPort extends events.EventEmitter{
 		}else{
 			setTimeout(function(){ 
 				const [keyWord, value] = data.split(/:(.+)/)
-				if(value !== 'undefined')
+				if(value !== 'undefined'){
 					this.emit('data', data)
-				else{
-					this.emit('data', keyWord + ':' + this.GetState(parseInt(keyWord)))
 				}
-
-								
+				else{
+					this.emit('data', keyWord + ':' + this.GetState(parseInt(keyWord), value))
+				}
 			}.bind(this), 10)
 		}
 	}
 
 	// Get the mocked current value of the state
-	GetState(command){
+	GetState(command, value){
 		let returnVal = null
 		this.config.state.forEach((s) => {
 			if(s.command === command){
-				// initialize the current value
-				if(typeof s.currentValue === 'undefined')
-					s.currentValue = s.min
+				if(s.type === 'output'){
+					// initialize the current value
+					if(typeof s.currentValue === 'undefined')
+						s.currentValue = s.min
 
-				// Initialize the increment
-				if(typeof s.increment === 'undefined')
-					s.increment = _.round((s.max - s.min)/25)
+					// Initialize the increment
+					if(typeof s.increment === 'undefined')
+						s.increment = _.round((s.max - s.min)/25)
 
-				// Increment the current value
-				s.currentValue += s.increment
-				returnVal = s.currentValue
+					// Increment the current value
+					s.currentValue += s.increment
+					returnVal = s.currentValue
 
-				// Invert the increment when out of bounds
-				if(s.currentValue > (s.max + Math.abs(3*s.increment))
-				|| s.currentValue < (s.min - Math.abs(3*s.increment)))
-					s.increment = -s.increment
+					// Invert the increment when out of bounds
+					if(s.currentValue > (s.max + Math.abs(3*s.increment))
+					|| s.currentValue < (s.min - Math.abs(3*s.increment)))
+						s.increment = -s.increment
+				}
+				else if(s.type === 'button'){
+					// initialize the current value
+					if(typeof s.currentValue === 'undefined')
+						s.currentValue = false
+
+					// invert the button state
+					s.currentValue = !s.currentValue
+					returnVal = s.currentValue
+				}
+				
 			}
 		})
 		return returnVal

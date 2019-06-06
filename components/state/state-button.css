@@ -6,4 +6,5 @@
 
 #slide-menu .spectrum-ButtonGroup {
 	max-width: 90%;
+	min-width: 60%;
 }

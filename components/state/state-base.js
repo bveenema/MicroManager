@@ -24,17 +24,8 @@ class StateBase {
 
 		// Attach HTML fragments
 		let fragment = state.Render(mustacheFile, state.settings)
-
-		console.log(fragment)
-
-		// Copy the fragment
-		state.node = Array.from(fragment.children)[0]
-
-		// state.node = document.createElement('div')
-		// state.node.appendChild(fragment)
+		state.node = Array.from(fragment.children)[0] // Copy the fragment
 		container.appendChild(fragment)
-
-		console.log(state.node)
 
 		// Additional Initialization functions
 		state.Init()
@@ -73,9 +64,12 @@ class StateBase {
 
 		// Search and create Loaders
 		this.loaders = Loader.CreateLoaders(fragment)
-		this.loaders.forEach((l) => {
-			l.SetState('loading')
-		})
+		if(this.loaders){
+			this.loaders.forEach((l) => {
+				l.SetState('loading')
+			})
+		}
+		
 		
 		return fragment
 	}
