@@ -1,0 +1,10 @@
+.spectrum-ToggleSwitch {
+	display: block;
+	margin: 0 auto;
+	max-width: 180px;
+	overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	text-align: left;
+	width: 90%;
+}

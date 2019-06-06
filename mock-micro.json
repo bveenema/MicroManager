@@ -89,6 +89,18 @@
 			"type": "button",
 			"command": 10,
 			"buttonType": "warning",
+			"updateRate": 10000
+		},
+		{
+			"name": "Wifi",
+			"type": "toggle",
+			"command": 11,
+			"updateRate": 10000
+		},
+		{
+			"name": "Light",
+			"type": "toggle",
+			"command": 12,
 			"updateRate": 5000
 		}
 	]

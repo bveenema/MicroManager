@@ -84,10 +84,19 @@ class SerialPort extends events.EventEmitter{
 			let config = JSON.stringify(this.config)
 			setTimeout(function(){ this.emit('data', 'CONFIG:'+config) }.bind(this), 50)
 		}else{
-			setTimeout(function(){ 
+			setTimeout(function(){
+				// Get the command and value
 				const [keyWord, value] = data.split(/:(.+)/)
+
+				// Get the type
+				let type = ''
+				this.config.state.forEach((s) => {
+					if(s.command == keyWord)
+						type = s.type
+				})
 				if(value !== 'undefined'){
 					this.emit('data', data)
+					if(type === 'toggle') this.emit('data', keyWord + ':e') // re-enable the toggle
 				}
 				else{
 					this.emit('data', keyWord + ':' + this.GetState(parseInt(keyWord), value))
@@ -127,6 +136,15 @@ class SerialPort extends events.EventEmitter{
 					// invert the button state
 					s.currentValue = !s.currentValue
 					returnVal = s.currentValue
+				}
+				else if(s.type === 'toggle'){
+					// initialize the current value and enable
+					if(typeof s.enabled === 'undefined')
+						s.enabled = 'd'
+
+					// inver the enable state
+					s.enabled = (s.enabled === 'e') ? 'd':'e'
+					returnVal = s.enabled
 				}
 				
 			}

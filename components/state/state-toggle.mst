@@ -1,0 +1,5 @@
+<div class="spectrum-ToggleSwitch">
+	<input type="checkbox" class="spectrum-ToggleSwitch-input" id="toggle-{{name}}-{{command}}">
+	<span class="spectrum-ToggleSwitch-switch"></span>
+	<label class="spectrum-ToggleSwitch-label" for="toggle-{{name}}-{{command}}">{{name}}</label>
+</div>
