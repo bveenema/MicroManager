@@ -1,5 +1,6 @@
 {
 	"baud": 9600,
+	"name": "Amphora",
 	"settings": [
 		{
 			"name": "Volume",

@@ -49,12 +49,16 @@ module.exports = {
 		}
 	},
 	
-	LoadSettings: function(state){
-		mainWindow.webContents.send('settings:build', state)
+	LoadSettings: function(settings){
+		mainWindow.webContents.send('settings:build', settings)
 	},
 
 	LoadState: function(state){
 		mainWindow.webContents.send('state:build', state)
+	},
+
+	LoadName: function(name){
+		mainWindow.webContents.send('name:update', name)
 	},
 
 	Update: function(command, value){

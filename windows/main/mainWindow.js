@@ -62,6 +62,14 @@ ipcRenderer.on('state:build', (e, state) => {
 	}
 })
 
+// Hande Name Update
+ipcRenderer.on('name:update', (e, name) => {
+	if(name){
+		// Update the device name
+		document.querySelector('#device-name').innerText = name
+	}
+})
+
 // Handle serial write reply
 ipcRenderer.on('serial:wrote', (e, command, value) => {
 	// Check State Objects for a match

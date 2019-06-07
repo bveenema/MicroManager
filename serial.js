@@ -105,15 +105,23 @@ function Open(device){
 }
 
 function HandleConfig(configObj) {
-  if(configObj.baud){
+  // Update the Baud Rate
+  if(configObj.baud)
     port.update({
       baudRate: configObj.baud
     })
-  }
-  if(configObj.settings){
+
+  // Add Name
+  if(configObj.name)
+    MainWindow.LoadName(configObj.name)
+
+  // Load settings
+  if(configObj.settings)
     MainWindow.LoadSettings(configObj.settings)
+
+  // Load state
+  if(configObj.state)
     MainWindow.LoadState(configObj.state)
-  }
 }
 
 function OpenPort(device){

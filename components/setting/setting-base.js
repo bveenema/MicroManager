@@ -27,7 +27,7 @@ class SettingBase{
 		// Attach HTML fragments
 		let fragment = s.Render(mustacheFile)
 		s.node = document.createElement('div')
-		s.node.classList.add('setting')
+		s.node.classList.add('setting', 'spectrum-Well')
 		s.node.appendChild(fragment)
 		container.appendChild(s.node)
 

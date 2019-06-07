@@ -18,6 +18,15 @@ body {
 	overflow: hidden;
 }
 
+#device-name {
+	text-align: center;
+}
+
+#banner-hr {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
 #main-content-inner {
 	width: 100%;
 }
