@@ -31,8 +31,6 @@ class DeviceSelector {
 		ds.node.appendChild(fragment)
 		container.appendChild(ds.node)
 
-		console.log(ds.node)
-
 		// add the listener
 		ds.AttachListener(fragment)
 

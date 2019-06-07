@@ -130,6 +130,7 @@ function OpenPort(device){
     port = new SerialPort(device.comName, {
       // no options
     })
+    console.log("PORT:\n", port)
 
     // Attach a newline parser
     const parser = port.pipe(new Readline({ delimiter: '\r\n' }))
@@ -190,11 +191,7 @@ module.exports = {
   GetDevices: function(){
     return new Promise((resolve, reject) => {
       SerialPort.list().then((ports) =>{
-        console.log(ports)
         resolve(ports)
-        ports.forEach((port) => {
-          console.log("----- Port -----\n", port)
-        })
       }, (err) => {
         console.error(err)
       })
@@ -206,5 +203,9 @@ module.exports = {
       SerialPort = MockSerialPort
     else
       SerialPort = RealSerialPort
+  },
+
+  Path: function(){
+    return (port) ? port.path : undefined
   }
 }

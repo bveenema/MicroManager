@@ -48,6 +48,8 @@ class SerialPort extends events.EventEmitter{
 			return comName === device.deviceInfo.comName
 		}).deviceInfo
 
+		this.path = comName
+
 		// save the device config
 		this.config = JSON.parse(fs.readFileSync('./mock-micro.json', 'utf8'))
 

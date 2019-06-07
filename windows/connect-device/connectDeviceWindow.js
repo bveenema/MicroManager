@@ -30,8 +30,7 @@ ipcRenderer.on('theme:change', function(e, theme){
 })
 
 // Handle Retrieve Serial Devices
-ipcRenderer.on('serial:devices', function(e, devices){
-	console.log(window)
+ipcRenderer.on('serial:devices', function(e, devices, path){
 	// Resize the window based on number of devices
 	window.resizeTo(window.outerWidth, 102+38+36*(devices.length-1))
 
@@ -43,4 +42,14 @@ ipcRenderer.on('serial:devices', function(e, devices){
 	devices.forEach((device) => {
 		DeviceSelectors.push(DeviceSelector.Create(deviceContainer, device))
 	})
+
+	// Highlight device if already connected
+	if(path){
+		DeviceSelectors.forEach((Device) => {
+			console.log(Device.device)
+			if(Device.device.comName === path){
+				Device.node.querySelector('input').checked = true
+			}
+		})
+	}
 })

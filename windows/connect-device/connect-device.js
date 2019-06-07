@@ -43,7 +43,7 @@ function createConnectDeviceWindow(){
 	window.once('ready-to-show', () => {
 		window.webContents.send('theme:change', currentTheme)
 		Serial.GetDevices().then((devices) =>{
-			window.webContents.send('serial:devices', devices)
+			window.webContents.send('serial:devices', devices, Serial.Path())
 			this.devices = devices;
 			window.show()
 		})	
