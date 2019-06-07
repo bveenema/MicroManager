@@ -53,7 +53,7 @@ function createConnectDeviceWindow(){
 	if(this.GetSerial === undefined){
 		this.GetSerial = setInterval(function(win){
 			Serial.GetDevices().then((devices) => {
-				if(isEqual(this.devices, devices)){
+				if(isEqual(this.devices, devices) === false){
 					win.webContents.send('serial:devices', devices)
 					this.devices = devices
 				}
