@@ -12,6 +12,7 @@ function createMainWindow(){
     // Create new window
     mainWindow = new BrowserWindow(
 			{
+				acceptFirstMouse: true,
 				show: false,
 				webPreferences: {
 					nodeIntegration: true

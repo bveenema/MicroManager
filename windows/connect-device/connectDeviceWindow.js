@@ -31,11 +31,13 @@ ipcRenderer.on('theme:change', function(e, theme){
 
 // Handle Retrieve Serial Devices
 ipcRenderer.on('serial:devices', function(e, devices){
+	console.log(window)
 	// Resize the window based on number of devices
-	window.resizeBy(0, 36*(devices.length-1))
+	window.resizeTo(window.outerWidth, 102+38+36*(devices.length-1))
 
 	// Clear the current device list
 	deviceContainer.innerHTML = ''
+	DeviceSelectors = []
 
 	// Create a device element for each device
 	devices.forEach((device) => {

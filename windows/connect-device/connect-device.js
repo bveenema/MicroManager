@@ -3,6 +3,7 @@ const electron = require('electron')
 const url = require('url')
 const path = require('path')
 const {BrowserWindow} = electron;
+const {isEqual} = require('lodash')
 
 // Local Imports
 const Serial = require('../../serial.js')
@@ -12,12 +13,19 @@ let currentTheme;
 
 // Handle create connect device window
 function createConnectDeviceWindow(){
+	// prevent duplicate windows
+	if(window) {
+		window.show()
+		return
+	}
+
 	// Create new window
 	window = new BrowserWindow({
 		autoHideMenuBar: true,
 		height: 102+38,
 		width: 284+16,
 		title: 'Connect To',
+		titleBarStyle: 'hidden',
 		webPreferences: {
 			nodeIntegration: true
 		},
@@ -35,16 +43,28 @@ function createConnectDeviceWindow(){
 	window.once('ready-to-show', () => {
 		window.webContents.send('theme:change', currentTheme)
 		Serial.GetDevices().then((devices) =>{
-			console.log('sending devices: ',devices)
 			window.webContents.send('serial:devices', devices)
+			this.devices = devices;
 			window.show()
-		})
-		
+		})	
 	})
+
+	// Check for new serial devices
+	if(this.GetSerial === undefined){
+		this.GetSerial = setInterval(function(win){
+			Serial.GetDevices().then((devices) => {
+				if(isEqual(this.devices, devices)){
+					win.webContents.send('serial:devices', devices)
+					this.devices = devices
+				}
+			})
+		}.bind(this), 1000, window)
+	}
 
 	// Garbage collection handle
 	window.on('close', function(){
 		window=null
+		clearInterval(this.GetSerial)
 	})
 }
 
