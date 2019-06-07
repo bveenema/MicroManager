@@ -7,37 +7,39 @@ const Settings = require('../../components/setting/setting-handler')
 const State = require('../../components/state/state-handler')
 
 // DOM elements
-const body = document.querySelector('body')
-const mainContentOuter = document.querySelector('#main-content-outer')
-const mainContentInner = document.querySelector('#main-content-inner')
-const slideMenu = document.querySelector('#slide-menu')
-const toggleSlideMenuButton = slideMenu.querySelector('#toggle-slide-menu')
-const settingsContainer = document.querySelector('#settings')
-const outputsContainer = document.querySelector('#outputs ul')
+const Body = document.querySelector('Body')
+const MainContentOuter = document.querySelector('#main-content-outer')
+const SlideMenu = document.querySelector('#slide-menu')
+const ToggleSlideMenuButton = SlideMenu.querySelector('#toggle-slide-menu')
+const SlideMenuIcon = ToggleSlideMenuButton.querySelector('use')
+const ConnectMessage = document.querySelector('#connect-message')
 
 // Toggle State Container Listener
-toggleSlideMenuButton.addEventListener('click', () => {
-	slideMenu.classList.toggle("open")
-	mainContentOuter.classList.toggle("drawer-open")
+function ToggleSlideMenu(){
+	SlideMenu.classList.toggle("open")
+	MainContentOuter.classList.toggle("drawer-open")
 
-	const icon = toggleSlideMenuButton.querySelector('use')
-	if(icon.getAttribute('xlink:href') == '#spectrum-css-icon-CrossMedium'){
-		icon.setAttribute('xlink:href', '#spectrum-css-icon-ArrowLeftMedium')
+	if(SlideMenuIcon.getAttribute('xlink:href') == '#spectrum-css-icon-CrossMedium'){
+		SlideMenuIcon.setAttribute('xlink:href', '#spectrum-css-icon-ArrowLeftMedium')
 	} else {
-		icon.setAttribute('xlink:href', '#spectrum-css-icon-CrossMedium')
+		SlideMenuIcon.setAttribute('xlink:href', '#spectrum-css-icon-CrossMedium')
 	}
-	
-})
+}
+
+ToggleSlideMenuButton.addEventListener('click', ToggleSlideMenu)
 
 // Handle settings load
 ipcRenderer.on('settings:build', (e, settings) => {
 	if(settings){
-		// clear any settings in the settings div
-		settingsContainer.innerHTML = ''
+		// Hide the connect message
+		ConnectMessage.style = 'display: none'
+
+		// clear any old settings objects
+		Settings.Clear()
 
 		// Build Settings
 		settings.forEach((s) =>{
-			Settings.CreateSetting(s)
+			Settings.Create(s)
 		})
 	}
 })
@@ -45,12 +47,17 @@ ipcRenderer.on('settings:build', (e, settings) => {
 // Handle state load
 ipcRenderer.on('state:build', (e, state) => {
 	if(state){
-		// clear any state in the drawer
-		outputsContainer.innerHTML = ''
+		// Show the drawer
+		SlideMenu.classList.add("open")
+		MainContentOuter.classList.add("drawer-open")
+		SlideMenuIcon.setAttribute('xlink:href', '#spectrum-css-icon-CrossMedium')
 
-		// Build the state
+		// Clear any old state objects
+		State.Clear()
+
+		// Build the new state objects
 		state.forEach((s) => {
-			State.CreateState(s)
+			State.Create(s)
 		})
 	}
 })
@@ -79,25 +86,25 @@ ipcRenderer.on('serial:wrote', (e, command, value) => {
 // Handle Theme Change
 ipcRenderer.on('theme:change', function(e, theme){
 	if(theme === 'light'){
-		body.classList.remove('spectrum--light')
-		body.classList.remove('spectrum--dark')
-		body.classList.add('spectrum--lightest')
-		slideMenu.classList.remove('spectrum--dark')
-		slideMenu.classList.remove('spectrum--darkest')
-		slideMenu.classList.add('spectrum--light')
+		Body.classList.remove('spectrum--light')
+		Body.classList.remove('spectrum--dark')
+		Body.classList.add('spectrum--lightest')
+		SlideMenu.classList.remove('spectrum--dark')
+		SlideMenu.classList.remove('spectrum--darkest')
+		SlideMenu.classList.add('spectrum--light')
 	}	else if(theme === 'dark'){
-		body.classList.remove('spectrum--lightest')
-		body.classList.remove('spectrum--light')
-		body.classList.add('spectrum--dark')
-		slideMenu.classList.remove('spectrum--light')
-		slideMenu.classList.remove('spectrum--dark')
-		slideMenu.classList.add('spectrum--darkest')
+		Body.classList.remove('spectrum--lightest')
+		Body.classList.remove('spectrum--light')
+		Body.classList.add('spectrum--dark')
+		SlideMenu.classList.remove('spectrum--light')
+		SlideMenu.classList.remove('spectrum--dark')
+		SlideMenu.classList.add('spectrum--darkest')
 	} else if(theme === 'default'){
-		body.classList.remove('spectrum--lightest')
-		body.classList.remove('spectrum--dark')
-		body.classList.add('spectrum--light')
-		slideMenu.classList.remove('spectrum--light')
-		slideMenu.classList.remove('spectrum--darkest')
-		slideMenu.classList.add('spectrum--dark')
+		Body.classList.remove('spectrum--lightest')
+		Body.classList.remove('spectrum--dark')
+		Body.classList.add('spectrum--light')
+		SlideMenu.classList.remove('spectrum--light')
+		SlideMenu.classList.remove('spectrum--darkest')
+		SlideMenu.classList.add('spectrum--dark')
 	}
 })

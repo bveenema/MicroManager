@@ -13,7 +13,7 @@ const ProcessContainer = document.querySelector('#processes div')
 module.exports = {
 	Objects: [],
 
-	CreateState: function(state) {
+	Create: function(state) {
 		// Create a new Instance of the state variable
 		if(state.type === 'output'){
 			this.Objects.push(StateOutput.Create(OutputContainer, state, 'state-output.mst', 'state-output.css'))
@@ -38,7 +38,17 @@ module.exports = {
 			// show the toggles section
 			if(ProcessContainer.parentNode.hasAttribute('hidden'))
 				ProcessContainer.parentNode.removeAttribute('hidden')
-		}
-			
+		}		
+	},
+
+	Clear: function(){
+		// clear the Objects array
+		this.Objects = []
+
+		// Clear the DOM
+		OutputContainer.innerHTML = ''
+		ProcessContainer.innerHTML = ''
+		ToggleContainer.innerHTML = ''
+		ButtonContainer.innerHTML = ''
 	}
 }

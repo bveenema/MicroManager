@@ -11,7 +11,6 @@ class Process extends StateBase {
 	}
 
 	Update(value) {
-		console.log(value)
 		if(value){
 			// Convert to whole number and clamp to 0-100%
 			let percentage = round(clamp(parseInt(value), 0, 100))

@@ -4,6 +4,7 @@ const StateBase = require('./state-base')
 class Output extends StateBase {
 	constructor(settings) {
 		super(settings)
+		this.currentValue = this.settings.min
 	}
 
 	Update(value) {
@@ -16,15 +17,18 @@ class Output extends StateBase {
 				}.bind(this), 1000)
 			}
 
-			// Update the DOM value
-			let valContainer = this.node.querySelector('.spectrum-Label')
-			valContainer.innerText = value
+			// Only update the DOM if the value has changed
+			if(this.currentValue !== value){
+				// Update the DOM value
+				let valContainer = this.node.querySelector('.spectrum-Label')
+				valContainer.innerText = value
 
-			// Update the Color
-			if(value > this.settings.max || value < this.settings.min)
-				this.SetColor('red')
-			else
-				this.SetColor('blue')
+				// Update the Color
+				if(value > this.settings.max || value < this.settings.min)
+					this.SetColor('red')
+				else
+					this.SetColor('blue')
+			}
 		}
 	}
 

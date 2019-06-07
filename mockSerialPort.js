@@ -96,7 +96,7 @@ class SerialPort extends events.EventEmitter{
 				})
 				if(value !== 'undefined'){
 					this.emit('data', data)
-					if(type === 'toggle') this.emit('data', keyWord + ':e') // re-enable the toggle
+					if(type === 'toggle') setTimeout(function(){ this.emit('data', keyWord + ':e') }.bind(this), 500) // re-enable the toggle
 				}
 				else{
 					this.emit('data', keyWord + ':' + this.GetState(parseInt(keyWord), value))
