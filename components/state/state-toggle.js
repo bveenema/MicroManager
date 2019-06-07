@@ -21,7 +21,6 @@ class Toggle extends StateBase {
 	}
 
 	Update(value) {
-		console.log('recieved:', value)
 		switch(value){
 			case 'c': // checked
 				this.input.checked = true

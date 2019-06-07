@@ -146,6 +146,17 @@ class SerialPort extends events.EventEmitter{
 					s.enabled = (s.enabled === 'e') ? 'd':'e'
 					returnVal = s.enabled
 				}
+				else if(s.type === 'process'){
+					// initialize the current value
+					if(typeof s.currentValue === 'undefined')
+						s.currentValue = 0
+
+					// Increment the current value, rest to 0 if > 100
+					let increment = (s.updateRate > 2000) ? 20 : 1
+					s.currentValue += increment
+					if(s.currentValue > 100) s.currentValue = 0
+					returnVal = s.currentValue
+				}
 				
 			}
 		})

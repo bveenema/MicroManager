@@ -1,0 +1,3 @@
+.spectrum-BarLoader:not(:first-child) {
+	margin-top: 2em;
+}

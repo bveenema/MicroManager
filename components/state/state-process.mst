@@ -1,0 +1,7 @@
+<div class="spectrum-BarLoader" role="progressbar">
+	<div class="spectrum-BarLoader-label">{{name}}</div>
+	<div class="spectrum-BarLoader-percentage">0%</div>
+	<div class="spectrum-BarLoader-track">
+		<div class="spectrum-BarLoader-fill" style="width: 0%;"></div>
+	</div>
+</div>

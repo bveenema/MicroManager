@@ -102,6 +102,18 @@
 			"type": "toggle",
 			"command": 12,
 			"updateRate": 5000
+		},
+		{
+			"name": "Cycle",
+			"type": "process",
+			"command": 13,
+			"updateRate": 250
+		},
+		{
+			"name": "Long Process",
+			"type": "process",
+			"command": 14,
+			"updateRate": 3000
 		}
 	]
 }
