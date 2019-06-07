@@ -38,10 +38,15 @@ module.exports = {
 			// show the toggles section
 			if(ProcessContainer.parentNode.hasAttribute('hidden'))
 				ProcessContainer.parentNode.removeAttribute('hidden')
-		}		
+		}
 	},
 
 	Clear: function(){
+		// Kill the update intervals
+		this.Objects.forEach((o) => {
+			o.Kill()
+		})
+
 		// clear the Objects array
 		this.Objects = []
 

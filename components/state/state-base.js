@@ -82,6 +82,11 @@ class StateBase {
 
 	// Dummy Update in case the sub-class does not implement
 	Update(){}
+
+	Kill(){
+		clearInterval(this.UpdateInterval);
+		console.log('cleared Interval')
+	}
 }
 
 module.exports = StateBase;
