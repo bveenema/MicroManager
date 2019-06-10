@@ -1308,7 +1308,7 @@
 {{ textfield/textarea-quiet.yml }}
 */
 .spectrum--lightest .spectrum-Textfield::placeholder {
-    color: rgb(149, 149, 149);
+    color: rgb(80, 80, 80);
   }
 /* topdoc
 {{ textfield/textarea.yml }}

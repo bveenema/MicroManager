@@ -832,7 +832,7 @@
 */
 .spectrum--dark .spectrum-FieldButton {
   color: rgb(227, 227, 227);
-  background-color: rgb(47, 47, 47);
+  background-color: rgb(37, 37, 37);
   border-color: rgb(74, 74, 74);
 }
 .spectrum--dark .spectrum-FieldButton:hover {
@@ -1308,7 +1308,7 @@
 {{ textfield/textarea-quiet.yml }}
 */
 .spectrum--dark .spectrum-Textfield::placeholder {
-    color: rgb(144, 144, 144);
+    color: rgb(227, 227, 227);
   }
 /* topdoc
 {{ textfield/textarea.yml }}
