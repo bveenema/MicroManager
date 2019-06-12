@@ -32,7 +32,7 @@ ipcRenderer.on('theme:change', function(e, theme){
 // Handle Retrieve Serial Devices
 ipcRenderer.on('serial:devices', function(e, devices, path){
 	// Resize the window based on number of devices
-	window.resizeTo(window.outerWidth, 102+38+36*(devices.length-1))
+	window.resizeTo(window.outerWidth, 140+38*(devices.length-1))
 
 	// Clear the current device list
 	deviceContainer.innerHTML = ''
