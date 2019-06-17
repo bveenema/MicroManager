@@ -18,6 +18,11 @@ body {
 	overflow: hidden;
 }
 
+/* Banner */
+#banner {
+	padding: 10px 0;
+}
+
 #device-name {
 	text-align: center;
 }
@@ -26,6 +31,8 @@ body {
 	margin-left: 10px;
 	margin-right: 10px;
 }
+
+/* Main Content */
 
 #main-content-inner {
 	width: 100%;
