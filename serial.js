@@ -8,6 +8,7 @@ const Readline = require('@serialport/parser-readline')
 // Local Imports
 const MicroDebugWindow = require('./windows/micro-debug/micro-debug')
 const MainWindow = require('./windows/main/main')
+const Key = require('./settings-state-key')
 
 let port = null
 const WRITE_INTERVAL = 10 //ms
@@ -146,6 +147,13 @@ function OpenPort(device){
       
       // Handle 'CONFIG' return
       }else if(keyWord === 'CONFIG'){
+        // update settings and state with key
+        Key.forEach((pair) => {
+          let [k, v] = pair
+          value = value.replace(new RegExp("\""+k+"\"",'g'), "\""+v+"\"")
+        })
+
+        // Convert JSON to object
         let config = JSON.parse(value)
         HandleConfig(config)
         resolve()

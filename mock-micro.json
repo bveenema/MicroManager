@@ -3,57 +3,56 @@
 	"name": "Amphora",
 	"settings": [
 		{
-			"name": "Volume",
-			"type": "slider",
-			"command": 1,
-			"min": 20,
-			"max": 30,
-			"default": 20,
-			"current": 22,
-			"float": false,
-			"unit": "dB"
+			"n": "Volume",
+			"t": "slider",
+			"c": 1,
+			"l": 20,
+			"h": 30,
+			"d": 20,
+			"r": 22,
+			"f": 0,
+			"i": "dB"
 		},
 		{
-			"name": "Volume",
-			"type": "slider",
-			"command": 2,
-			"min": 0,
-			"max": 10,
-			"default": 1,
-			"current": 1.2,
-			"float": true,
-			"floatPrecision": 2,
-			"unit": "dB"
+			"n": "Volume",
+			"t": "slider",
+			"c": 2,
+			"l": 0,
+			"h": 10,
+			"d": 1,
+			"r": 1.2,
+			"f": 2,
+			"i": "dB"
 		},
 		{
-			"name": "Motor Seed",
-			"type": "input",
-			"command": 3,
-			"min": 0,
-			"max": 10,
-			"default": 1,
-			"current": 2,
-			"float": false,
-			"unit": "RPM"
+			"n": "Motor Seed",
+			"t": "input",
+			"c": 3,
+			"l": 0,
+			"h": 10,
+			"d": 1,
+			"r": 2,
+			"f": 0,
+			"i": "RPM"
 		},
 		{
-			"name": "Target Pressure",
-			"type": "input",
-			"command": 4,
-			"min": 10,
-			"max": 500,
-			"default": 11,
-			"current": 12,
-			"float": false,
-			"unit": "PSI"
+			"n": "Target Pressure",
+			"t": "input",
+			"c": 4,
+			"l": 10,
+			"h": 500,
+			"d": 11,
+			"r": 12,
+			"f": 0,
+			"i": "PSI"
 		},
 		{
-			"name": "Direction",
-			"type": "picker",
-			"command": 5,
-			"default": "Left",
-			"current": "Right",
-			"options": [
+			"n": "Direction",
+			"t": "picker",
+			"c": 5,
+			"d": "Left",
+			"r": "Right",
+			"o": [
 				"Left",
 				"Right",
 				"Up",
@@ -63,58 +62,58 @@
 	],
 	"state": [
 		{
-			"name": "Pressure",
-			"type": "output",
-			"command": 7,
-			"min": 0,
-			"max": 25,
-			"updateRate": 250
+			"n": "Pressure",
+			"t": "output",
+			"c": 7,
+			"l": 0,
+			"h": 25,
+			"u": 250
 		},
 		{
-			"name": "Temperature",
-			"type": "output",
-			"command": 8,
-			"min": 50,
-			"max": 90,
-			"updateRate": 3000
+			"n": "Temperature",
+			"t": "output",
+			"c": 8,
+			"l": 50,
+			"h": 90,
+			"u": 3000
 		},
 		{
-			"name": "Run Cycle",
-			"type": "button",
-			"command": 9,
-			"buttonType": "primary",
-			"updateRate": 5000
+			"n": "Run Cycle",
+			"t": "button",
+			"c": 9,
+			"b": "primary",
+			"u": 5000
 		},
 		{
-			"name": "Reset",
-			"type": "button",
-			"command": 10,
-			"buttonType": "warning",
-			"updateRate": 10000
+			"n": "Reset",
+			"t": "button",
+			"c": 10,
+			"b": "warning",
+			"u": 10000
 		},
 		{
-			"name": "Wifi",
-			"type": "toggle",
-			"command": 11,
-			"updateRate": 10000
+			"n": "Wifi",
+			"t": "toggle",
+			"c": 11,
+			"u": 10000
 		},
 		{
-			"name": "Light",
-			"type": "toggle",
-			"command": 12,
-			"updateRate": 5000
+			"n": "Light",
+			"t": "toggle",
+			"c": 12,
+			"u": 5000
 		},
 		{
-			"name": "Cycle",
-			"type": "process",
-			"command": 13,
-			"updateRate": 250
+			"n": "Cycle",
+			"t": "process",
+			"c": 13,
+			"u": 250
 		},
 		{
-			"name": "Long Process",
-			"type": "process",
-			"command": 14,
-			"updateRate": 3000
+			"n": "Long Process",
+			"t": "process",
+			"c": 14,
+			"u": 3000
 		}
 	]
 }

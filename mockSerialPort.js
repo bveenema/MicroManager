@@ -93,8 +93,8 @@ class SerialPort extends events.EventEmitter{
 				// Get the type
 				let type = ''
 				this.config.state.forEach((s) => {
-					if(s.command == keyWord)
-						type = s.type
+					if(s.c == keyWord)
+						type = s.t // t == type
 				})
 				if(value !== 'undefined'){
 					this.emit('data', data)
@@ -111,26 +111,26 @@ class SerialPort extends events.EventEmitter{
 	GetState(command, value){
 		let returnVal = null
 		this.config.state.forEach((s) => {
-			if(s.command === command){
-				if(s.type === 'output'){
+			if(s.c === command){
+				if(s.t === 'output'){
 					// initialize the current value
 					if(typeof s.currentValue === 'undefined')
-						s.currentValue = s.min
+						s.currentValue = s.l
 
 					// Initialize the increment
 					if(typeof s.increment === 'undefined')
-						s.increment = _.round((s.max - s.min)/25)
+						s.increment = _.round((s.h - s.l)/25)
 
 					// Increment the current value
 					s.currentValue += s.increment
 					returnVal = s.currentValue
 
 					// Invert the increment when out of bounds
-					if(s.currentValue > (s.max + Math.abs(3*s.increment))
-					|| s.currentValue < (s.min - Math.abs(3*s.increment)))
+					if(s.currentValue > (s.h + Math.abs(3*s.increment))
+					|| s.currentValue < (s.l - Math.abs(3*s.increment)))
 						s.increment = -s.increment
 				}
-				else if(s.type === 'button'){
+				else if(s.t === 'button'){
 					// initialize the current value
 					if(typeof s.currentValue === 'undefined')
 						s.currentValue = false
@@ -139,7 +139,7 @@ class SerialPort extends events.EventEmitter{
 					s.currentValue = !s.currentValue
 					returnVal = s.currentValue
 				}
-				else if(s.type === 'toggle'){
+				else if(s.t === 'toggle'){
 					// initialize the current value and enable
 					if(typeof s.enabled === 'undefined')
 						s.enabled = 'd'
@@ -148,13 +148,13 @@ class SerialPort extends events.EventEmitter{
 					s.enabled = (s.enabled === 'e') ? 'd':'e'
 					returnVal = s.enabled
 				}
-				else if(s.type === 'process'){
+				else if(s.t === 'process'){
 					// initialize the current value
 					if(typeof s.currentValue === 'undefined')
 						s.currentValue = 0
 
 					// Increment the current value, rest to 0 if > 100
-					let increment = (s.updateRate > 2000) ? 20 : 1
+					let increment = (s.u > 2000) ? 20 : 1
 					s.currentValue += increment
 					if(s.currentValue > 100) s.currentValue = 0
 					returnVal = s.currentValue
