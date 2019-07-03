@@ -104,3 +104,11 @@ The high and low settings define the upper and lower bounds of the track so out 
 ![Setting Picker](./readmeAssets/Setting-Picker.jpg)
 
 Pickers are used for string type settings only. All options become available when the drop arrow is clicked. Clicking a setting, updates the value on the micro
+
+## State
+States are current values on the micro-controller. They are mostly read-only
+
+### Output
+### Processes
+### Toggles
+### Buttons
