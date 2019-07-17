@@ -4,6 +4,9 @@
 - npm install
 - `./node_modules/.bin/electron-rebuild` - must be used with python 2 https://github.com/nodejs/node-gyp/issues/193#issuecomment-376602165
 
+## How to Run
+- npm start
+
 ## CONFIG Format
 ### Background
 During the handshake when connecting to a new device, the micro will send a CONFIG message to MicroManager which contains a JSON string of all settings, state and configuration options (baud, name, etc).
