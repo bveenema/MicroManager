@@ -138,15 +138,22 @@ function OpenPort(device){
 
     // Handle Incoming Data
     parser.on('data', (data) => {
-      // split the data string at the first colon, into keyword and value
-      let [keyWord, value] = data.split(/:(.+)/)
+      // split the data string at the first colon, into keyWord and value
+      let keyWord, value
+      let i = data.indexOf(':')
+      if(i >= 0)
+        [keyWord, value] = [data.slice(0,i), data.slice(i+1)]
+      else
+        keyWord = data.trim();
+      console.log(keyWord)
       let command = parseInt(keyWord)
       // Handle 'READY' keyword
-      if(keyWord === 'READY'){
-        port.write('CONFIG')
-      
+      if(keyWord == 'READY'){
+        port.write('CONFIG\n')
+        clearInterval(port.SendConnectInterval)
       // Handle 'CONFIG' return
       }else if(keyWord === 'CONFIG'){
+        console.log(value);
         // update settings and state with key
         Key.forEach((pair) => {
           let [k, v] = pair
@@ -160,6 +167,7 @@ function OpenPort(device){
       
       // Handle debug messages
       }else if(command === 0){
+        console.log('Debug Log:', value);
         MicroDebugWindow.Update(value)
       
       // Handle command messages
@@ -176,6 +184,10 @@ function OpenPort(device){
     // Handle open
     port.on('open', () => {
       console.log('Open')
+      port.SendConnectInterval = setInterval( function(){
+        console.log('Sending MICROMANAGER')
+        port.write('MICROMANAGER\n') 
+      }, 100 )
     })
 
     // Handle error

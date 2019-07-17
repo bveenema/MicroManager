@@ -58,12 +58,6 @@ class SerialPort extends events.EventEmitter{
 			this.emit('open') 
 		}.bind(this), 50)
 
-		// Send the READY message
-		this.ready = false
-		setTimeout(function(){
-			this.emit('data', "READY")
-		}.bind(this), 200)
-
 		// Drip debug messages
 		this.dataDripCount = 0
 		this.dataDripInterval = setInterval(function(){
@@ -81,7 +75,11 @@ class SerialPort extends events.EventEmitter{
 	}
 
 	write(data) {
-		if(data === 'CONFIG'){
+		data = data.trim();
+		if(data === 'MICROMANAGER'){
+			console.log('Sending Ready')
+			setTimeout(function(){ 	this.emit('data', "READY") }.bind(this), 50)
+		}else if(data === 'CONFIG'){
 			console.log('Sending Config')
 			let config = JSON.stringify(this.config)
 			setTimeout(function(){ this.emit('data', 'CONFIG:'+config) }.bind(this), 50)
