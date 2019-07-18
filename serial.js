@@ -145,10 +145,9 @@ function OpenPort(device){
         [keyWord, value] = [data.slice(0,i), data.slice(i+1)]
       else
         keyWord = data.trim();
-      console.log(keyWord)
       let command = parseInt(keyWord)
       // Handle 'READY' keyword
-      if(keyWord == 'READY'){
+      if(keyWord === 'READY'){
         port.write('CONFIG\n')
         clearInterval(port.SendConnectInterval)
       // Handle 'CONFIG' return
@@ -167,7 +166,6 @@ function OpenPort(device){
       
       // Handle debug messages
       }else if(command === 0){
-        console.log('Debug Log:', value);
         MicroDebugWindow.Update(value)
       
       // Handle command messages
